@@ -124,15 +124,15 @@ nav a[href="#anfrage"] { display: none; }
 
 /* Licht */
 .cols { display: grid; gap: var(--s2); }
-.cols article { background: var(--surface); border-radius: 24px; display: grid; grid-template-columns: 64px 1fr; gap: 0 var(--s2); align-items: center; padding: var(--s3); }
-.cols .plot { width: 64px; height: auto; }
+.cols article { background: var(--surface); border-radius: 24px; display: grid; grid-template-columns: 96px 1fr; gap: 0 var(--s2); align-items: center; padding: var(--s3); }
+.cols .plot { width: 96px; height: auto; }
 .cols h3 { margin-bottom: 2px; font-size: 1.25rem; }
 .cols .model { font-size: .95rem; }
 .cols p.txt { margin-top: 6px; }
 @media (min-width: 900px) {
   .cols { grid-template-columns: repeat(4, 1fr); }
   .cols article { grid-template-columns: 1fr; align-items: start; padding: var(--s4) var(--s3) var(--s3); }
-  .cols .plot { width: 84px; margin-bottom: var(--s3); }
+  .cols .plot { width: 120px; margin-bottom: var(--s3); }
 }
 
 /* Zubehör */
@@ -376,7 +376,7 @@ details > div p + p { margin-top: var(--s2); }
   var GENERIC = "Hallo Christian, ich möchte bei leihly anfragen.\n\nDatum:\nOrt:\nAnlass:";
 
   /* ---------- Bühnenplan-Symbole ---------- */
-  var SIZE = { top: [44, 56], sub: [58, 58], col: [22, 92], box: [42, 54] };
+  var SIZE = { top: [44, 56], topL: [54, 68], sub: [58, 58], subL: [68, 66], col: [22, 92], box: [42, 54], bass: [46, 60], col2: [22, 80] };
 
   function stackSvg(items, x, ground) {
     var maxW = 0, i, out = "", y = ground, cx;
@@ -397,6 +397,15 @@ details > div p + p { margin-top: var(--s2); }
           out += '<circle cx="' + cx + '" cy="' + (y - h * 0.36) + '" r="14"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.82) + '" r="3.5"/>';
         } else if (it === "sub") {
           out += '<circle cx="' + cx + '" cy="' + (y - h / 2) + '" r="21"/><circle class="dot" cx="' + cx + '" cy="' + (y - h / 2) + '" r="4"/>';
+        } else if (it === "topL") {
+          out += '<circle cx="' + cx + '" cy="' + (y - h * 0.36) + '" r="18"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.84) + '" r="4"/>';
+        } else if (it === "subL") {
+          out += '<circle cx="' + cx + '" cy="' + (y - h / 2) + '" r="25"/><circle class="dot" cx="' + cx + '" cy="' + (y - h / 2) + '" r="4.5"/>';
+        } else if (it === "bass") {
+          out += '<circle cx="' + cx + '" cy="' + (y - h * 0.55) + '" r="14"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.55) + '" r="3.5"/><path d="M' + (cx - 11) + ' ' + (y - 9) + ' h22"/>';
+        } else if (it === "col2") {
+          for (var j = 0; j < 4; j++) { out += '<circle cx="' + cx + '" cy="' + (by + 13 + j * 14) + '" r="5"/>'; }
+          out += '<circle class="dot" cx="' + cx + '" cy="' + (y - 9) + '" r="3.5"/>';
         } else if (it === "col") {
           for (var k = 0; k < 4; k++) { out += '<circle cx="' + cx + '" cy="' + (by + 14 + k * 15) + '" r="5"/>'; }
           out += '<circle class="dot" cx="' + cx + '" cy="' + (y - 14) + '" r="3.5"/>';
@@ -409,7 +418,10 @@ details > div p + p { margin-top: var(--s2); }
     return { svg: out, w: maxW };
   }
 
-  function plot(stacks) {
+  function badgeSvg(cx, cy) {
+    return '<g transform="rotate(-8 ' + cx + ' ' + cy + ')"><circle cx="' + cx + '" cy="' + cy + '" r="19" fill="#A7E3C6" stroke="#195241" stroke-width="2"/><rect x="' + (cx - 8) + '" y="' + (cy - 13) + '" width="14" height="7" rx="1.5" fill="none" stroke="#195241" stroke-width="1.6"/><path d="M' + (cx + 6.5) + ' ' + (cy - 11.5) + ' v4" fill="none" stroke="#195241" stroke-width="1.6"/><path d="M' + (cx - 6) + ' ' + (cy - 11.5) + ' h8 v4 h-8z" fill="#195241" stroke="none"/><text x="' + cx + '" y="' + (cy + 9) + '" text-anchor="middle" font-size="9.5" font-weight="800" fill="#195241" stroke="none" style="letter-spacing:0">AKKU</text></g>';
+  }
+  function plot(stacks, badge) {
     var gap = 26, x = 14, parts = "", ground = 150;
     stacks.forEach(function (s) {
       var r = stackSvg(s, x, ground);
@@ -417,6 +429,7 @@ details > div p + p { margin-top: var(--s2); }
       x += r.w + gap;
     });
     var total = x - gap + 14;
+    if (badge) { parts += badgeSvg(total / 2, 28); }
     return { inner: '<path class="ground" d="M2 ' + (ground + 6) + ' H' + (total - 2) + '"/>' + parts, vb: "0 0 " + total + " " + (ground + 12) };
   }
   function drawInto(el, stacks) {
@@ -427,20 +440,20 @@ details > div p + p { margin-top: var(--s2); }
     el.setAttribute("height", d[3]);
     el.innerHTML = p.inner;
   }
-  function makeSvg(stacks, label) {
-    var p = plot(stacks);
+  function makeSvg(stacks, label, badge) {
+    var p = plot(stacks, badge);
     var h = p.vb.split(" ");
     return '<svg class="plot" viewBox="' + p.vb + '" width="' + h[2] + '" height="' + h[3] + '" role="img" aria-label="' + label + '">' + p.inner + '</svg>';
   }
 
   /* ---------- Sets ---------- */
   var SETS = [
-    { id: "soundboks", name: "SOUNDBOKS 3", parts: "Akku-Box, bis zu 4 Boxen buchbar", desc: "Läuft mit Akku, du brauchst keinen Strom. Per Bluetooth verbunden. Für Gartenparty, Geburtstag und kleine Feiern.", price: 30, single: "", stacks: [["box"], ["box"]], label: "Zwei Akku-Boxen" },
+    { id: "soundboks", name: "SOUNDBOKS 3", parts: "Akku-Box, bis zu 4 Boxen buchbar", desc: "Läuft mit Akku, du brauchst keinen Strom. Per Bluetooth verbunden. Für Gartenparty, Geburtstag und kleine Feiern.", price: 30, single: "", stacks: [["stand", "box"], ["stand", "box"], ["stand", "box"], ["stand", "box"]], badge: true, label: "Vier Akku-Boxen auf Stativen" },
     { id: "linear110", name: "HK Audio Linear 110 XA", parts: "2 × Topteil", desc: "Für Reden, Hintergrundmusik und kleine Events.", price: 40, single: "Einzeln 25 €", stacks: [["stand", "top"], ["stand", "top"]], label: "Zwei Tops auf Stativen" },
-    { id: "polar", name: "HK Audio Polar", parts: "2 × Säulensystem", desc: "Für mittelgroße Feiern und Hochzeiten. Schlank aufgebaut.", price: 70, single: "Einzeln 40 €", stacks: [["col"], ["col"]], label: "Zwei Säulensysteme" },
-    { id: "lunar-duo", name: "HK Audio Lunar Duo", parts: "2 × Lunar 112 Top", desc: "Full Range mit Bluetooth, für mittlere bis große Events.", price: 70, single: "Einzeln 40 €", stacks: [["stand", "top"], ["stand", "top"]], label: "Zwei Tops auf Stativen" },
+    { id: "polar", name: "HK Audio Polar", parts: "2 × Säulensystem", desc: "Für mittelgroße Feiern und Hochzeiten. Schlank aufgebaut.", price: 70, single: "Einzeln 40 €", stacks: [["bass", "col2"], ["bass", "col2"]], label: "Zwei Säulensysteme auf Bass" },
+    { id: "lunar-duo", name: "HK Audio Lunar Duo", parts: "2 × Lunar 112 Top", desc: "Full Range mit Bluetooth, für mittlere bis große Events.", price: 70, single: "Einzeln 40 €", stacks: [["stand", "topL"], ["stand", "topL"]], label: "Zwei Tops auf Stativen" },
     { id: "linear5", name: "HK Audio Linear 5 Power-Set", parts: "2 × 110 XA Top + 1 × 115 Sub", desc: "Das Linear-Set mit Sub für Musik mit Bass.", price: 130, single: "", stacks: [["stand", "top"], ["sub"], ["stand", "top"]], label: "Zwei Tops und ein Sub" },
-    { id: "lunar-plus", name: "HK Audio Lunar Plus", parts: "2 × Lunar 112 Top + 1 × 15\" Sub", desc: "Für größere Partys und DJ-Sets, mit Bass und Bluetooth.", price: 170, single: "", stacks: [["stand", "top"], ["sub"], ["stand", "top"]], label: "Zwei Tops und ein Sub" },
+    { id: "lunar-plus", name: "HK Audio Lunar Plus", parts: "2 × Lunar 112 Top + 1 × 15\" Sub", desc: "Für größere Partys und DJ-Sets, mit Bass und Bluetooth.", price: 170, single: "", stacks: [["stand", "topL"], ["subL"], ["stand", "topL"]], label: "Zwei Tops und ein Sub" },
     { id: "lunar-max", name: "HK Audio Lunar Max", parts: "2 × Lunar 112 Top + 2 × 15\" Sub", desc: "Die größte Anlage in meinem Verleih, mit zwei Subs für viel Bass.", price: 250, single: "", stacks: [["sub", "pole", "top"], ["sub", "pole", "top"]], label: "Zwei Tops auf zwei Subs" }
   ];
   var byId = {};
@@ -448,7 +461,7 @@ details > div p + p { margin-top: var(--s2); }
 
   document.getElementById("rows").innerHTML = SETS.map(function (s) {
     return '<article class="tile" id="set-' + s.id + '">' +
-      '<div class="art">' + makeSvg(s.stacks, s.label) + '</div>' +
+      '<div class="art">' + makeSvg(s.stacks, s.label, s.badge) + '</div>' +
       '<h3>' + s.name + '</h3><p class="parts">' + s.parts + '</p><p class="desc muted">' + s.desc + '</p>' +
       '<div class="buy"><div class="price-line"><span class="amount">' + s.price + ' €</span><span class="per">pro Tag</span>' + (s.single ? '<span class="single muted">' + s.single + '</span>' : '') + '</div>' +
       '<a class="btn" target="_blank" rel="noopener" href="' + waLink(setMsg(s)) + '">' + s.name.replace("HK Audio ", "") + ' anfragen</a></div>' +
@@ -478,7 +491,7 @@ details > div p + p { margin-top: var(--s2); }
     Array.prototype.forEach.call(chips.querySelectorAll(".chip"), function (c) {
       c.setAttribute("aria-pressed", String(Number(c.getAttribute("data-i")) === i));
     });
-    pick.innerHTML = '<div>' + makeSvg(s.stacks, s.label) + '</div>' +
+    pick.innerHTML = '<div>' + makeSvg(s.stacks, s.label, s.badge) + '</div>' +
       '<div><div class="name">' + s.name + '</div><p class="why">' + o.why + '</p>' +
       '<p class="price">' + s.price + ' € pro Tag, ' + s.parts + '</p>' +
       '<p class="alt muted">Alternative: ' + a.name + ' für ' + a.price + ' € pro Tag.</p>' +
@@ -499,9 +512,9 @@ details > div p + p { margin-top: var(--s2); }
   ];
   function lightIcon(k) {
     var inner = "";
-    if (k === "ball") { inner = '<path d="M60 4 V26"/><circle class="body" cx="60" cy="52" r="26"/><path d="M34 52 H86 M60 26 V78 M42 34 C54 44 54 60 42 70 M78 34 C66 44 66 60 78 70"/>'; }
-    if (k === "pod") { inner = '<path d="M10 100 H110" class="ground"/><path class="body" d="M36 100 C36 70 84 70 84 100 Z"/><path d="M44 78 C52 70 68 70 76 78"/><circle class="dot" cx="60" cy="86" r="3.5"/>'; }
-    if (k === "fx") { inner = '<path d="M10 100 H110" class="ground"/><path d="M60 62 V100 M60 62 L46 100 M60 62 L74 100"/><rect class="body" x="28" y="30" width="64" height="32" rx="5"/><circle cx="44" cy="46" r="7"/><circle cx="60" cy="46" r="7"/><circle cx="76" cy="46" r="7"/>'; }
+    if (k === "ball") { inner = '<path d="M10 100 H110" class="ground"/><path d="M60 70 V92 M60 92 L46 100 M60 92 L74 100"/><circle class="body" cx="60" cy="44" r="25"/><path d="M35 44 H85 M60 19 V69 M43 27 C54 37 54 51 43 61 M77 27 C66 37 66 51 77 61"/><path d="M60 8 V14 M92 18 L88 22 M28 18 L32 22 M100 44 H94 M20 44 H26 M94 68 L90 64 M26 68 L30 64"/><path d="M92 100 H100 M100 100 C108 100 108 88 108 84" stroke-width="1.6"/><rect x="104" y="72" width="8" height="12" rx="1.5" stroke-width="1.6"/><path d="M106.5 72 V68 M109.5 72 V68" stroke-width="1.6"/>'; }
+    if (k === "pod") { inner = '<path d="M10 100 H110" class="ground"/><path class="body" d="M36 100 C36 70 84 70 84 100 Z"/><circle class="dot" cx="60" cy="86" r="3.5"/><path d="M60 62 V50 M44 66 L36 56 M76 66 L84 56 M32 78 L20 72 M88 78 L100 72"/>'; }
+    if (k === "fx") { inner = '<path d="M10 104 H110" class="ground"/><path d="M60 46 V104 M60 46 L44 104 M60 46 L76 104"/><rect class="body" x="4" y="10" width="112" height="36" rx="6"/><circle cx="20" cy="28" r="6"/><circle cx="40" cy="28" r="6"/><circle class="dot" cx="40" cy="28" r="2"/><rect x="54" y="22" width="12" height="12" rx="2"/><path d="M80 21.5 L86.5 34 H73.5 Z"/><path d="M100 21 L107.5 28 L100 35 L92.5 28 Z"/>'; }
     if (k === "tube") { inner = '<path d="M10 100 H110" class="ground"/><rect class="body" x="52" y="10" width="16" height="90" rx="8"/><path d="M60 22 V88"/>'; }
     return '<svg class="plot" viewBox="0 0 120 108" role="img" aria-hidden="true">' + inner + '</svg>';
   }
