@@ -123,20 +123,23 @@ nav a[href="#anfrage"] { display: none; }
 @media (min-width: 900px) { .tiles { grid-template-columns: 1fr 1fr; gap: var(--s3); } .tile { padding: var(--s4); } .tile:last-child:nth-child(odd) { grid-column: 1 / -1; } }
 
 /* Licht */
-.cols { display: grid; gap: var(--s2); }
-.cols article { background: var(--surface); border-radius: 24px; display: grid; grid-template-columns: 96px 1fr; gap: 0 var(--s2); align-items: center; padding: var(--s3); }
+.cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s2); }
+.cols article > div { min-width: 0; }
+.cols h3 { overflow-wrap: anywhere; hyphens: auto; }
+.cols article { background: var(--surface); border-radius: 24px; display: grid; align-content: start; grid-template-columns: 96px 1fr; gap: 0 var(--s2); align-items: center; padding: var(--s3); }
 .cols .plot { width: 96px; height: auto; }
 .cols h3 { margin-bottom: 2px; font-size: 1.25rem; }
 .cols .model { font-size: .95rem; }
 .cols p.txt { margin-top: 6px; }
 @media (min-width: 900px) {
-  .cols { grid-template-columns: repeat(4, 1fr); }
+  .cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cols.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .cols article { grid-template-columns: 1fr; align-items: start; padding: var(--s4) var(--s3) var(--s3); }
   .cols .plot { width: 120px; margin-bottom: var(--s3); }
 }
 
 /* Zubehör */
-.zub { display: grid; gap: var(--s4); max-width: 880px; margin: 0 auto; }
+.zub { max-width: 560px; margin: var(--s4) auto 0; }
 .zub ul { list-style: none; margin: 0; padding: 0; }
 .zub li { padding: 14px 0; border-top: 1px solid var(--line); display: grid; gap: 2px; }
 .zub li:last-child { border-bottom: 1px solid var(--line); }
@@ -145,7 +148,7 @@ nav a[href="#anfrage"] { display: none; }
 .included h3 { margin-bottom: var(--s2); color: var(--cream); }
 .included ul li { border-color: var(--line-on-green); }
 .included ul li:last-child { border-bottom: 0; }
-@media (min-width: 800px) { .zub { grid-template-columns: 1.3fr 1fr; gap: var(--s5); } .zub li { grid-template-columns: 220px 1fr; gap: var(--s3); } .included { padding: var(--s4); } .included ul li { grid-template-columns: 1fr; } }
+@media (min-width: 800px) { .included { padding: var(--s4); } }
 
 /* Ablauf */
 .steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: var(--s3); }
@@ -224,10 +227,6 @@ details > div p + p { margin-top: var(--s2); }
       <a class="btn" href="#anfrage">Anfrage stellen</a>
       <a class="link" href="#sound">Sets und Preise ansehen</a>
     </div>
-    <figure class="stage" style="margin-bottom:0">
-      <svg class="plot" id="hero-plot" role="img" aria-label="Zeichnung des Sets Lunar Max: zwei Lautsprecher auf zwei Subwoofern"></svg>
-      <figcaption class="muted">Lunar Max als Zeichnung: zwei Tops auf zwei Subs.</figcaption>
-    </figure>
   </div>
 </section>
 
@@ -264,9 +263,12 @@ details > div p + p { margin-top: var(--s2); }
 
 <section class="tight" id="zubehoer">
   <div class="wrap">
-    <div class="sec-head"><h2>Zubehör</h2></div>
+    <div class="sec-head">
+      <h2>Zubehör</h2>
+      <p class="lead muted">Preise für Zubehör nenne ich dir mit der Anfrage.</p>
+    </div>
+    <div class="cols c3" id="zub-cols"></div>
     <div class="zub">
-      <ul id="zub-list"></ul>
       <div class="included">
         <h3>Bei jedem Set dabei</h3>
         <ul>
@@ -468,7 +470,6 @@ details > div p + p { margin-top: var(--s2); }
       '</article>';
   }).join("");
 
-  drawInto(document.getElementById("hero-plot"), byId["lunar-max"].stacks);
 
   /* ---------- Anlass-Finder ---------- */
   var OCCASIONS = [
@@ -524,16 +525,26 @@ details > div p + p { margin-top: var(--s2); }
 
   /* ---------- Zubehör ---------- */
   var ZUB = [
-    ["Beamer", "für Filme, Fotos und Präsentationen"],
-    ["Leinwand", "passend zum Beamer"],
-    ["Stromgenerator Anker 535", "Strom, wo keine Steckdose ist"],
-    ["Nebelmaschine", "für Lichteffekte"],
-    ["Eisnebelmaschine", "bodennaher Nebel, zum Beispiel für den Hochzeitstanz"],
-    ["Mikrofone", "Gesangsmikrofon und normales Mikrofon"]
+    { name: "Beamer", text: "Für Filme, Fotos und Präsentationen.", icon: "beamer" },
+    { name: "Leinwand", text: "Passend zum Beamer.", icon: "screen" },
+    { name: "Stromgenerator Anker 535", text: "Strom, wo keine Steckdose ist.", icon: "power" },
+    { name: "Nebelmaschine", text: "Für Lichteffekte.", icon: "fog" },
+    { name: "Eisnebelmaschine", text: "Bodennaher Nebel, zum Beispiel für den Hochzeitstanz.", icon: "ice" },
+    { name: "Mikrofone", text: "Gesangsmikrofon und normales Mikrofon.", icon: "mic" }
   ];
-  document.getElementById("zub-list").innerHTML = ZUB.map(function (z) {
-    return '<li><span class="n">' + z[0] + '</span><span class="muted">' + z[1] + '</span></li>';
-  }).join("") + '<li><span class="muted">Preise für Zubehör nenne ich mit der Anfrage.</span></li>';
+  function zubIcon(k) {
+    var g = '<path d="M10 100 H110" class="ground"/>', inner = "";
+    if (k === "beamer") { inner = g + '<path d="M26 100 V92 M58 100 V92"/><rect class="body" x="14" y="56" width="56" height="36" rx="6"/><circle cx="34" cy="74" r="10"/><circle class="dot" cx="34" cy="74" r="3"/><path d="M50 66 H62 M50 74 H62 M50 82 H62"/><path d="M70 66 L108 48 M70 82 L108 100"/>'; }
+    if (k === "screen") { inner = g + '<rect class="body" x="14" y="8" width="92" height="56" rx="3"/><path d="M60 64 V96 M60 84 L42 100 M60 84 L78 100"/>'; }
+    if (k === "power") { inner = g + '<path d="M44 34 V24 H76 V34"/><rect class="body" x="22" y="34" width="76" height="58" rx="9"/><path d="M66 42 L48 68 H60 L54 86 L74 58 H62 Z"/>'; }
+    if (k === "fog") { inner = g + '<rect class="body" x="10" y="64" width="56" height="30" rx="6"/><rect class="body" x="66" y="70" width="14" height="12" rx="2"/><circle class="dot" cx="24" cy="79" r="3"/><path d="M84 68 a8 8 0 0 1 12-8 a10 10 0 0 1 18 4 a7 7 0 0 1 -2 14 h-22"/><path d="M92 38 a6 6 0 0 1 10-4 a7 7 0 0 1 12 3"/>'; }
+    if (k === "ice") { inner = g + '<rect class="body" x="10" y="54" width="52" height="38" rx="6"/><path d="M36 62 V84 M25 73 H47 M28 65 L44 81 M44 65 L28 81"/><rect class="body" x="62" y="78" width="12" height="10" rx="2"/><path d="M78 84 c8-8 14-8 20 0 s14 8 18 0 M80 94 c8-6 14-6 20 0 s10 6 12 2"/>'; }
+    if (k === "mic") { inner = g + '<circle class="body" cx="38" cy="26" r="15"/><path d="M26 22 H50 M24 30 H52"/><path class="body" d="M30 40 L35 94 H41 L46 40 Z"/><rect class="body" x="78" y="10" width="14" height="30" rx="7"/><path d="M78 24 H92"/><path class="body" d="M80 40 L83 94 H87 L90 40 Z"/>'; }
+    return '<svg class="plot" viewBox="0 0 120 108" role="img" aria-hidden="true">' + inner + '</svg>';
+  }
+  document.getElementById("zub-cols").innerHTML = ZUB.map(function (z) {
+    return '<article>' + zubIcon(z.icon) + '<div><h3>' + z.name + '</h3><p class="txt">' + z.text + '</p></div></article>';
+  }).join("");
 
   /* ---------- WhatsApp-Links mit Vorlage ---------- */
   ["wa-main", "bar-wa"].forEach(function (id) {
