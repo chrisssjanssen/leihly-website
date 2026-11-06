@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>leihly Eventtechnik Köln</title>
+<meta name="description" content="Sound, Licht und Bild zum Mieten in Köln. PA-Sets, Partylicht, Beamer und Strom für Hochzeit, Geburtstag und Firmenfeier. Kabel und Stative inklusive.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFFCF2">
+<style>
+/* Layout idea: ruhige Produktseite im Apple-Stil. Zentrierte Überschriften, große Schrift, abgerundete Kacheln, Pill-Buttons. Grün und Creme von leihly.com, Mint als einziger neuer Akzent. Mobil zuerst. */
+:root {
+  --cream: #FFFCF2;
+  --surface: #F3F0E6;
+  --green: #195241;
+  --green-2: #20654F;
+  --mint: #A7E3C6;
+  --ink: #1D2A25;
+  --grey: #66645F;
+  --on-green-muted: #CFE0D8;
+  --line: rgba(25, 82, 65, .2);
+  --line-on-green: rgba(255, 252, 242, .25);
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 40px; --s5: 64px;
+  --section: clamp(56px, 12vw, 120px);
+  --gutter: clamp(20px, 5vw, 40px);
+  --radius: 28px;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--font); font-size: 1.0625rem; line-height: 1.5; letter-spacing: -0.011em; padding-bottom: 88px; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+img, svg { max-width: 100%; }
+a { color: inherit; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+.on-green :focus-visible { outline-color: var(--mint); }
+.wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter); }
+.center { text-align: center; }
+h1, h2, h3 { font-weight: 700; line-height: 1.07; letter-spacing: -0.03em; margin: 0; color: var(--green); text-wrap: balance; }
+h2 { font-size: clamp(2.2rem, 8vw, 3.6rem); }
+h3 { font-size: 1.4rem; letter-spacing: -0.02em; }
+.on-green h2, .on-green h3 { color: var(--cream); }
+.lead { font-size: clamp(1.15rem, 3.4vw, 1.4rem); line-height: 1.4; max-width: 30em; margin-left: auto; margin-right: auto; }
+.muted { color: var(--grey); }
+.on-green { background: var(--green); color: var(--cream); }
+.on-green .muted { color: var(--on-green-muted); }
+section { padding: var(--section) 0; }
+section.tight { padding-top: 0; }
+.sec-head { text-align: center; margin-bottom: var(--s4); }
+.sec-head .lead { margin-top: var(--s2); }
+
+/* Buttons: Pill, mindestens 48 px hoch */
+.btn { font: inherit; font-weight: 600; letter-spacing: -0.01em; display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 28px; background: var(--green); color: var(--cream); border: 0; border-radius: 999px; text-decoration: none; cursor: pointer; text-align: center; line-height: 1.2; }
+.btn:hover { background: #123E32; }
+.on-green .btn { background: var(--cream); color: var(--green); }
+.on-green .btn:hover { background: var(--mint); }
+.link { font-weight: 600; color: var(--green); text-decoration: none; display: inline-flex; align-items: center; min-height: 48px; padding: 0 6px; }
+.link::after { content: "\203A"; margin-left: 6px; font-size: 1.3em; line-height: 1; }
+.link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Kopf */
+header.top { padding: var(--s1) 0 0; border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--s3); }
+.mark { font-weight: 800; font-size: 1.7rem; letter-spacing: -0.04em; color: var(--green); text-decoration: none; min-height: 48px; display: inline-flex; align-items: center; }
+nav { display: flex; gap: 2px; width: 100%; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter); }
+nav::-webkit-scrollbar { display: none; }
+nav a { flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; font-size: .95rem; font-weight: 500; color: var(--green); text-decoration: none; }
+nav a:first-child { padding-left: 0; }
+nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+nav a[href="#anfrage"] { display: none; }
+@media (max-width: 380px) { nav a { padding: 0 8px; font-size: .93rem; } nav a:first-child { padding-left: 0; } }
+@media (min-width: 760px) { header.top { padding: 0; } nav { width: auto; margin: 0; padding: 0; } nav a:first-child { padding-left: 12px; } nav a[href="#anfrage"] { display: inline-flex; } }
+
+/* Hero */
+.hero { padding-top: clamp(40px, 9vw, 88px); padding-bottom: var(--s5); text-align: center; }
+.hero h1 { font-size: clamp(3rem, 14vw, 6.6rem); font-weight: 800; line-height: 1; letter-spacing: -0.045em; }
+.hero h1 span { display: block; }
+@media (min-width: 900px) { .hero h1 span { display: inline; } }
+.hero .lead { margin-top: var(--s3); }
+.cta-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--s1) var(--s3); margin-top: var(--s3); }
+.stage { margin: var(--s5) auto 0; max-width: 880px; background: var(--surface); border-radius: var(--radius); padding: clamp(28px, 6vw, 56px) var(--s3) var(--s3); }
+.stage .plot { width: auto; height: clamp(150px, 34vw, 240px); margin: 0 auto; }
+.stage figcaption { font-size: .95rem; margin-top: var(--s2); }
+.stage { margin-left: auto; margin-right: auto; }
+
+/* Bühnenplan-Symbole */
+.plot { display: block; color: var(--green); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; max-width: 100%; }
+.plot .body { fill: var(--cream); }
+.plot .dot { fill: currentColor; stroke: none; }
+.plot .ground { stroke-width: 1.5; stroke-dasharray: 2 6; }
+.on-green .plot { color: var(--cream); }
+.on-green .plot .body { fill: var(--green); }
+
+/* Anlass-Finder */
+.chips { display: grid; gap: var(--s1); margin: 0 auto; padding: 0; list-style: none; max-width: 560px; }
+.chip { font: inherit; font-weight: 600; letter-spacing: -0.01em; width: 100%; min-height: 52px; padding: 12px 22px; text-align: center; background: var(--surface); color: var(--green); border: 0; border-radius: 18px; cursor: pointer; }
+.chip:hover { background: #E8E4D6; }
+.chip[aria-pressed="true"] { background: var(--green); color: var(--cream); }
+@media (min-width: 700px) { .chips { display: flex; flex-wrap: wrap; justify-content: center; max-width: none; gap: 10px; } .chip { width: auto; border-radius: 999px; } }
+.pick { margin: var(--s4) auto 0; max-width: 880px; background: var(--surface); border-radius: var(--radius); padding: var(--s4) var(--s3); display: grid; gap: var(--s3); text-align: center; justify-items: center; }
+.pick .plot { height: 130px; width: auto; }
+.pick .name { font-size: clamp(1.7rem, 6vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; color: var(--green); }
+.pick .why { margin-top: var(--s1); max-width: 28em; }
+.pick .price { margin-top: var(--s2); font-weight: 600; font-variant-numeric: tabular-nums; }
+.pick .alt { margin-top: 4px; font-size: .98rem; }
+.pick .btn { margin-top: var(--s3); width: 100%; }
+@media (min-width: 700px) { .pick { grid-template-columns: minmax(180px, 280px) 1fr; text-align: left; justify-items: start; gap: var(--s5); padding: var(--s4); align-items: center; } .pick .plot { height: 180px; margin: 0 auto; } .pick .btn { width: auto; } }
+
+/* Sound-Sets als Kacheln */
+.tiles { display: grid; gap: var(--s2); }
+.tile { background: var(--green-2); border-radius: var(--radius); padding: var(--s3); display: flex; flex-direction: column; scroll-margin-top: 16px; }
+.tile .art { min-height: 130px; display: flex; align-items: flex-end; margin-bottom: var(--s3); }
+.tile .plot { height: 120px; width: auto; }
+.tile .parts { font-weight: 600; margin-top: 4px; }
+.tile p.desc { margin-top: var(--s1); max-width: 30em; }
+.buy { margin-top: auto; padding-top: var(--s3); display: grid; gap: var(--s2); }
+.price-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; font-variant-numeric: tabular-nums; }
+.price-line .amount { font-size: 2.6rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--cream); }
+.price-line .per { font-weight: 600; }
+.price-line .single { flex-basis: 100%; font-size: .98rem; margin-top: 4px; }
+.buy .btn { width: 100%; }
+@media (min-width: 900px) { .tiles { grid-template-columns: 1fr 1fr; gap: var(--s3); } .tile { padding: var(--s4); } .tile:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+
+/* Licht */
+.cols { display: grid; gap: var(--s2); }
+.cols article { background: var(--surface); border-radius: 24px; display: grid; grid-template-columns: 64px 1fr; gap: 0 var(--s2); align-items: center; padding: var(--s3); }
+.cols .plot { width: 64px; height: auto; }
+.cols h3 { margin-bottom: 2px; font-size: 1.25rem; }
+.cols .model { font-size: .95rem; }
+.cols p.txt { margin-top: 6px; }
+@media (min-width: 900px) {
+  .cols { grid-template-columns: repeat(4, 1fr); }
+  .cols article { grid-template-columns: 1fr; align-items: start; padding: var(--s4) var(--s3) var(--s3); }
+  .cols .plot { width: 84px; margin-bottom: var(--s3); }
+}
+
+/* Zubehör */
+.zub { display: grid; gap: var(--s4); max-width: 880px; margin: 0 auto; }
+.zub ul { list-style: none; margin: 0; padding: 0; }
+.zub li { padding: 14px 0; border-top: 1px solid var(--line); display: grid; gap: 2px; }
+.zub li:last-child { border-bottom: 1px solid var(--line); }
+.zub li .n { font-weight: 600; color: var(--green); }
+.included { background: var(--green); color: var(--cream); padding: var(--s3); border-radius: var(--radius); align-self: start; }
+.included h3 { margin-bottom: var(--s2); color: var(--cream); }
+.included ul li { border-color: var(--line-on-green); }
+.included ul li:last-child { border-bottom: 0; }
+@media (min-width: 800px) { .zub { grid-template-columns: 1.3fr 1fr; gap: var(--s5); } .zub li { grid-template-columns: 220px 1fr; gap: var(--s3); } .included { padding: var(--s4); } .included ul li { grid-template-columns: 1fr; } }
+
+/* Ablauf */
+.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: var(--s3); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 52px 1fr; gap: 0 var(--s2); padding-top: var(--s3); border-top: 1px solid var(--line); }
+.steps li::before { content: counter(s); grid-row: span 2; font-size: 2.6rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--green); }
+.steps h3 { margin-bottom: 6px; }
+@media (min-width: 800px) {
+  .steps { grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+  .steps li { grid-template-columns: 1fr; border-top: 2px solid var(--green); }
+  .steps li::before { grid-row: auto; margin-bottom: var(--s2); }
+}
+.terms { margin: var(--s5) auto 0; padding: 0; max-width: 880px; display: grid; }
+.terms div { padding: var(--s2) 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.terms div:last-child { border-bottom: 1px solid var(--line); }
+.terms dt { font-weight: 600; color: var(--green); }
+.terms dd { margin: 0; }
+@media (min-width: 800px) { .terms div { grid-template-columns: 220px 1fr; gap: var(--s3); } }
+
+/* Über mich */
+.about .statement { font-size: clamp(1.6rem, 5.4vw, 2.6rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.03em; color: var(--green); max-width: 22em; margin: 0 auto; text-wrap: balance; }
+.about .sub { margin-top: var(--s3); max-width: 30em; margin-left: auto; margin-right: auto; }
+.about .small { margin-bottom: var(--s3); }
+
+/* Anfrage */
+.request .inner { max-width: 900px; margin: 0 auto; }
+.contact { display: grid; gap: var(--s4); justify-items: center; }
+.channels { display: grid; gap: var(--s1); width: 100%; max-width: 420px; }
+.channels .btn { width: 100%; min-height: 56px; font-size: 1.05rem; }
+.on-green .btn.line { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 2px var(--cream); }
+.on-green .btn.line:hover { background: var(--cream); color: var(--green); }
+.numbers { margin: var(--s3) 0 0; display: grid; gap: 6px; text-align: center; }
+.numbers { gap: 0; }
+.numbers span { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0 8px; }
+.numbers a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.qr { display: none; margin: 0; background: #fff; border-radius: 24px; padding: var(--s3); text-align: center; color: var(--ink); }
+.qr svg { width: 200px; height: 200px; display: block; margin: 0 auto; }
+.qr figcaption { margin: var(--s2) auto 0; font-size: .95rem; max-width: 14em; }
+@media (min-width: 760px) { .contact { grid-template-columns: 1fr auto; gap: var(--s5); align-items: center; justify-items: stretch; } .numbers { text-align: left; } .numbers span { justify-content: flex-start; } .qr { display: block; } }
+
+footer { background: var(--surface); padding: var(--s4) 0 var(--s5); font-size: .95rem; color: var(--grey); }
+footer .wrap { display: grid; gap: 0; }
+footer .copy { margin-bottom: var(--s2); }
+details { border-top: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 600; color: var(--green); min-height: 52px; display: flex; align-items: center; }
+details > div { padding: 0 0 var(--s3); max-width: 46em; }
+details > div p + p { margin-top: var(--s2); }
+
+/* Feste Anfrage-Leiste nur am Handy */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom)); background: var(--cream); border-top: 1px solid var(--line); transition: transform .2s ease; }
+.bar .btn { width: 100%; }
+.bar.hide { transform: translateY(110%); }
+@media (min-width: 760px) { .bar { display: none; } body { padding-bottom: 0; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top" id="top">leihly</a>
+    <nav aria-label="Hauptmenü">
+      <a href="#sound">Sound</a>
+      <a href="#licht">Licht</a>
+      <a href="#zubehoer">Zubehör</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#anfrage">Anfrage</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <h1><span>Sound.</span> <span>Licht.</span> <span>Bild.</span></h1>
+    <p class="lead">Eventtechnik zum Mieten in Köln. Boxen, Partylicht, Beamer und Strom für Hochzeit, Geburtstag und Firmenfeier. Kabel und Stative sind dabei.</p>
+    <div class="cta-row">
+      <a class="btn" href="#anfrage">Anfrage stellen</a>
+      <a class="link" href="#sound">Sets und Preise ansehen</a>
+    </div>
+    <figure class="stage" style="margin-bottom:0">
+      <svg class="plot" id="hero-plot" role="img" aria-label="Zeichnung des Sets Lunar Max: zwei Lautsprecher auf zwei Subwoofern"></svg>
+      <figcaption class="muted">Lunar Max als Zeichnung: zwei Tops auf zwei Subs.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="tight" id="finder">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Was feierst du?</h2>
+      <p class="lead muted">Tipp auf deinen Anlass. Du siehst, welches Set dazu passt.</p>
+    </div>
+    <ul class="chips" id="chips"></ul>
+    <div class="pick" id="pick" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="on-green" id="sound">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Sound</h2>
+      <p class="lead muted">Sieben Sets mit festem Tagespreis. Tops, Subs und Säulen mietest du auch einzeln oder anders kombiniert. Den Preis nenne ich dir dann direkt.</p>
+    </div>
+    <div class="tiles" id="rows"></div>
+  </div>
+</section>
+
+<section id="licht">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Licht</h2>
+      <p class="lead muted">Ambientelicht für Tische und Ecken, Effektlicht für die Tanzfläche. Die Preise nenne ich dir mit der Anfrage, weil sie vom Paket abhängen.</p>
+    </div>
+    <div class="cols" id="licht-cols"></div>
+  </div>
+</section>
+
+<section class="tight" id="zubehoer">
+  <div class="wrap">
+    <div class="sec-head"><h2>Zubehör</h2></div>
+    <div class="zub">
+      <ul id="zub-list"></ul>
+      <div class="included">
+        <h3>Bei jedem Set dabei</h3>
+        <ul>
+          <li>Alle Kabel für Strom, Audio, XLR und Klinke</li>
+          <li>Passende Stative und Distanzstangen, je nach Set</li>
+          <li>Kurze Einweisung bei der Abholung</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight" id="ablauf">
+  <div class="wrap">
+    <div class="sec-head"><h2>So läuft es ab</h2></div>
+    <ol class="steps">
+      <li><h3>Anfrage schicken</h3><p>Schreib mir Datum, Ort und Anlass. Ich antworte in unter 30 Minuten und sage dir, welches Set passt.</p></li>
+      <li><h3>Abholen oder liefern lassen</h3><p>Abholung in Köln nach Absprache, mit kurzer Einweisung. Lieferung und Aufbau sind nach Absprache möglich.</p></li>
+      <li><h3>Feiern und zurückgeben</h3><p>Alles ist angeschlossen und läuft. Danach bringst du die Technik zurück.</p></li>
+    </ol>
+    <dl class="terms">
+      <div><dt>Kaution</dt><dd>Bei der Abholung hinterlegst du eine Kaution und zeigst deinen Personalausweis.</dd></div>
+      <div><dt>Mehrere Tage</dt><dd>Für mehrtägige Mieten gibt es Rabatt.</dd></div>
+      <div><dt>Einzelteile</dt><dd>Tops, Subs und Säulen einzeln oder neu kombiniert. Preis auf Anfrage.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="about center" id="ueber-mich" style="background:var(--surface)">
+  <div class="wrap">
+    <p class="small muted">Über mich</p>
+    <p class="statement">Ich bin Christian, Lehrer und Hobby-DJ. Bei leihly bekommst du Technik, die ich selbst benutze, und eine Ansprechperson, die schnell antwortet.</p>
+    <p class="sub muted">Ich sage dir ehrlich, wenn ein kleineres Set reicht. Wenn du unsicher bist, schick mir einfach Ort und Anlass.</p>
+  </div>
+</section>
+
+<section class="request on-green" id="anfrage">
+  <div class="wrap">
+    <div class="inner">
+      <div class="sec-head">
+        <h2>Anfrage</h2>
+        <p class="lead muted">Antwort in unter 30 Minuten. Schreib mir kurz Datum, Ort und Anlass, am schnellsten geht es per WhatsApp.</p>
+      </div>
+      <div class="contact">
+        <div class="left">
+          <div class="channels">
+            <a class="btn" id="wa-main" href="https://wa.me/4915233952330" target="_blank" rel="noopener">Per WhatsApp schreiben</a>
+            <a class="btn line" href="tel:+4915233952330">Anrufen</a>
+            <a class="btn line" href="mailto:jns.pay@web.de">E-Mail schreiben</a>
+          </div>
+          <p class="numbers">
+            <span>Telefon <a href="tel:+4915233952330">+49 152 33952330</a></span>
+            <span>E-Mail <a href="mailto:jns.pay@web.de">jns.pay@web.de</a></span>
+          </p>
+        </div>
+        <figure class="qr">
+          <svg role="img" aria-label="QR-Code: öffnet WhatsApp-Chat mit leihly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><title>QR-Code zu WhatsApp</title><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#195241" d="M2 2.5h7m3 0h1m3 0h3m1 0h3m1 0h7m-29 1h1m5 0h1m1 0h4m1 0h2m2 0h1m1 0h2m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m5 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h8m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m1 0h4m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m3 0h1m1 0h1m1 0h5m1 0h1m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h2m1 0h3m2 0h1m1 0h3m-20 1h1m1 0h4m1 0h2m1 0h1m1 0h1m2 0h1m1 0h5m1 0h2m1 0h1m-27 1h1m1 0h3m1 0h1m2 0h1m5 0h6m2 0h4m-28 1h2m4 0h1m1 0h1m2 0h2m1 0h1m1 0h2m3 0h2m1 0h3m-26 1h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h1m3 0h1m4 0h1m-29 1h1m4 0h3m1 0h2m4 0h1m3 0h4m4 0h1m-24 1h1m2 0h1m2 0h1m4 0h4m3 0h1m1 0h1m1 0h3m-27 1h1m2 0h4m3 0h2m1 0h3m1 0h2m1 0h2m1 0h1m1 0h2m-27 1h1m2 0h1m3 0h2m6 0h3m1 0h2m1 0h5m-29 1h1m1 0h2m2 0h1m2 0h3m1 0h2m1 0h2m3 0h1m3 0h1m1 0h1m-28 1h2m1 0h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h4m1 0h1m1 0h2m-25 1h3m1 0h1m1 0h5m2 0h1m1 0h1m1 0h1m1 0h1m5 0h1m2 0h1m-29 1h4m1 0h1m2 0h3m9 0h3m1 0h5m-29 1h2m1 0h2m1 0h2m2 0h4m1 0h1m1 0h8m1 0h2m-20 1h2m1 0h1m2 0h3m1 0h3m3 0h4m-28 1h7m3 0h3m1 0h2m1 0h4m1 0h1m1 0h1m1 0h2m-28 1h1m5 0h1m1 0h2m1 0h2m1 0h1m2 0h1m1 0h2m3 0h2m1 0h2m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h2m2 0h10m2 0h1m-28 1h1m1 0h3m1 0h1m1 0h2m1 0h1m4 0h2m5 0h1m1 0h3m-28 1h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2m2 0h2m1 0h2m1 0h3m-29 1h1m5 0h1m1 0h2m1 0h1m1 0h3m3 0h1m2 0h1m1 0h1m1 0h1m1 0h1m-29 1h7m3 0h1m1 0h3m1 0h1m1 0h1m1 0h6"/></svg>
+
+
+          <figcaption>Mit dem Handy scannen und direkt in WhatsApp schreiben.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="copy">© 2026 leihly, Eventtechnik in Köln</p>
+    <details>
+      <summary>Mietbedingungen</summary>
+      <div>
+        <p>Alle Preise sind Tagespreise pro Set. Kabel und Stative gehören je nach Set dazu.</p>
+        <p>Abholung in Köln nach Absprache mit kurzer Einweisung. Lieferung und Aufbau sind nach Absprache möglich.</p>
+        <p>Bei der Abholung hinterlegst du eine Kaution und zeigst deinen Personalausweis. Für mehrtägige Mieten gibt es Rabatt. Einzelteile und eigene Kombinationen kosten nach Absprache.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Impressum</summary>
+      <div>
+        <p>Christian Janßen<br>Brüsseler Str. 104<br>50672 Köln</p>
+        <p>Telefon: +49 152 33952330<br>E-Mail: jns.pay@web.de</p>
+      </div>
+    </details>
+    <details>
+      <summary>Datenschutz</summary>
+      <div>
+        <p>Verantwortlich ist Christian Janßen, Anschrift im Impressum, E-Mail jns.pay@web.de.</p>
+        <p>Beim Aufruf dieser Seite verarbeitet der Hoster technisch notwendige Daten, zum Beispiel IP-Adresse und Zeitpunkt des Abrufs, in Server-Logfiles. Die Seite setzt keine Cookies und nutzt keine Analyse- oder Werbedienste. Sie verwendet die Schrift deines Geräts und lädt keine Schriften von Dritten nach.</p>
+        <p>Wenn du mich über WhatsApp, Telefon oder E-Mail kontaktierst, nutze ich deine Angaben nur, um deine Anfrage zu beantworten und die Miete abzuwickeln. Tippst du auf einen WhatsApp-Button oder scannst den QR-Code, öffnet sich WhatsApp. Dafür gelten die Datenschutzbestimmungen von WhatsApp. Diese Seite sendet vorher keine Daten dorthin.</p>
+        <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Widerspruch. Du kannst dich außerdem bei der zuständigen Datenschutzaufsicht beschweren, in Nordrhein-Westfalen ist das die Landesbeauftragte für Datenschutz und Informationsfreiheit.</p>
+      </div>
+    </details>
+  </div>
+</footer>
+
+<div class="bar" id="bar"><a class="btn" id="bar-wa" href="https://wa.me/4915233952330" target="_blank" rel="noopener">Per WhatsApp anfragen</a></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var WA = "https://wa.me/4915233952330";
+  function waLink(msg) { return WA + "?text=" + encodeURIComponent(msg); }
+  function setMsg(s) { return "Hallo Christian, ich möchte bei leihly das Set " + s.name + " anfragen.\n\nDatum:\nOrt:"; }
+  var GENERIC = "Hallo Christian, ich möchte bei leihly anfragen.\n\nDatum:\nOrt:\nAnlass:";
+
+  /* ---------- Bühnenplan-Symbole ---------- */
+  var SIZE = { top: [44, 56], sub: [58, 58], col: [22, 92], box: [42, 54] };
+
+  function stackSvg(items, x, ground) {
+    var maxW = 0, i, out = "", y = ground, cx;
+    items.forEach(function (it) { if (SIZE[it]) { maxW = Math.max(maxW, SIZE[it][0]); } });
+    cx = x + maxW / 2;
+    for (i = 0; i < items.length; i++) {
+      var it = items[i];
+      if (it === "stand") {
+        out += '<path d="M' + cx + ' ' + (y - 34) + ' V' + y + ' M' + cx + ' ' + (y - 34) + ' L' + (cx - 14) + ' ' + y + ' M' + cx + ' ' + (y - 34) + ' L' + (cx + 14) + ' ' + y + '"/>';
+        y -= 34;
+      } else if (it === "pole") {
+        out += '<path d="M' + cx + ' ' + y + ' v-16"/>';
+        y -= 16;
+      } else {
+        var w = SIZE[it][0], h = SIZE[it][1], bx = cx - w / 2, by = y - h;
+        out += '<rect class="body" x="' + bx + '" y="' + by + '" width="' + w + '" height="' + h + '" rx="5"/>';
+        if (it === "top") {
+          out += '<circle cx="' + cx + '" cy="' + (y - h * 0.36) + '" r="14"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.82) + '" r="3.5"/>';
+        } else if (it === "sub") {
+          out += '<circle cx="' + cx + '" cy="' + (y - h / 2) + '" r="21"/><circle class="dot" cx="' + cx + '" cy="' + (y - h / 2) + '" r="4"/>';
+        } else if (it === "col") {
+          for (var k = 0; k < 4; k++) { out += '<circle cx="' + cx + '" cy="' + (by + 14 + k * 15) + '" r="5"/>'; }
+          out += '<circle class="dot" cx="' + cx + '" cy="' + (y - 14) + '" r="3.5"/>';
+        } else if (it === "box") {
+          out += '<path d="M' + (cx - 8) + ' ' + by + ' v-7 h16 v7"/><circle cx="' + cx + '" cy="' + (y - h * 0.45) + '" r="13"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.45) + '" r="3"/>';
+        }
+        y -= h;
+      }
+    }
+    return { svg: out, w: maxW };
+  }
+
+  function plot(stacks) {
+    var gap = 26, x = 14, parts = "", ground = 150;
+    stacks.forEach(function (s) {
+      var r = stackSvg(s, x, ground);
+      parts += r.svg;
+      x += r.w + gap;
+    });
+    var total = x - gap + 14;
+    return { inner: '<path class="ground" d="M2 ' + (ground + 6) + ' H' + (total - 2) + '"/>' + parts, vb: "0 0 " + total + " " + (ground + 12) };
+  }
+  function drawInto(el, stacks) {
+    var p = plot(stacks);
+    el.setAttribute("viewBox", p.vb);
+    var d = p.vb.split(" ");
+    el.setAttribute("width", d[2]);
+    el.setAttribute("height", d[3]);
+    el.innerHTML = p.inner;
+  }
+  function makeSvg(stacks, label) {
+    var p = plot(stacks);
+    var h = p.vb.split(" ");
+    return '<svg class="plot" viewBox="' + p.vb + '" width="' + h[2] + '" height="' + h[3] + '" role="img" aria-label="' + label + '">' + p.inner + '</svg>';
+  }
+
+  /* ---------- Sets ---------- */
+  var SETS = [
+    { id: "soundboks", name: "SOUNDBOKS 3", parts: "Akku-Box, bis zu 4 Boxen buchbar", desc: "Läuft mit Akku, du brauchst keinen Strom. Per Bluetooth verbunden. Für Gartenparty, Geburtstag und kleine Feiern.", price: 30, single: "", stacks: [["box"], ["box"]], label: "Zwei Akku-Boxen" },
+    { id: "linear110", name: "HK Audio Linear 110 XA", parts: "2 × Topteil", desc: "Für Reden, Hintergrundmusik und kleine Events.", price: 40, single: "Einzeln 25 €", stacks: [["stand", "top"], ["stand", "top"]], label: "Zwei Tops auf Stativen" },
+    { id: "polar", name: "HK Audio Polar", parts: "2 × Säulensystem", desc: "Für mittelgroße Feiern und Hochzeiten. Schlank aufgebaut.", price: 70, single: "Einzeln 40 €", stacks: [["col"], ["col"]], label: "Zwei Säulensysteme" },
+    { id: "lunar-duo", name: "HK Audio Lunar Duo", parts: "2 × Lunar 112 Top", desc: "Full Range mit Bluetooth, für mittlere bis große Events.", price: 70, single: "Einzeln 40 €", stacks: [["stand", "top"], ["stand", "top"]], label: "Zwei Tops auf Stativen" },
+    { id: "linear5", name: "HK Audio Linear 5 Power-Set", parts: "2 × 110 XA Top + 1 × 115 Sub", desc: "Das Linear-Set mit Sub für Musik mit Bass.", price: 130, single: "", stacks: [["stand", "top"], ["sub"], ["stand", "top"]], label: "Zwei Tops und ein Sub" },
+    { id: "lunar-plus", name: "HK Audio Lunar Plus", parts: "2 × Lunar 112 Top + 1 × 15\" Sub", desc: "Für größere Partys und DJ-Sets, mit Bass und Bluetooth.", price: 170, single: "", stacks: [["stand", "top"], ["sub"], ["stand", "top"]], label: "Zwei Tops und ein Sub" },
+    { id: "lunar-max", name: "HK Audio Lunar Max", parts: "2 × Lunar 112 Top + 2 × 15\" Sub", desc: "Die größte Anlage in meinem Verleih, mit zwei Subs für viel Bass.", price: 250, single: "", stacks: [["sub", "pole", "top"], ["sub", "pole", "top"]], label: "Zwei Tops auf zwei Subs" }
+  ];
+  var byId = {};
+  SETS.forEach(function (s) { byId[s.id] = s; });
+
+  document.getElementById("rows").innerHTML = SETS.map(function (s) {
+    return '<article class="tile" id="set-' + s.id + '">' +
+      '<div class="art">' + makeSvg(s.stacks, s.label) + '</div>' +
+      '<h3>' + s.name + '</h3><p class="parts">' + s.parts + '</p><p class="desc muted">' + s.desc + '</p>' +
+      '<div class="buy"><div class="price-line"><span class="amount">' + s.price + ' €</span><span class="per">pro Tag</span>' + (s.single ? '<span class="single muted">' + s.single + '</span>' : '') + '</div>' +
+      '<a class="btn" target="_blank" rel="noopener" href="' + waLink(setMsg(s)) + '">' + s.name.replace("HK Audio ", "") + ' anfragen</a></div>' +
+      '</article>';
+  }).join("");
+
+  drawInto(document.getElementById("hero-plot"), byId["lunar-max"].stacks);
+
+  /* ---------- Anlass-Finder ---------- */
+  var OCCASIONS = [
+    { label: "Reden und Hintergrundmusik", set: "linear110", alt: "lunar-duo", why: "Für Ansprachen oder Musik im Hintergrund reichen zwei Tops. Sie sind schnell aufgebaut." },
+    { label: "Gartenparty oder kleine Feier", set: "soundboks", alt: "linear110", why: "Die Akku-Box läuft ohne Strom und spielt per Bluetooth. Mehr Aufbau brauchst du nicht." },
+    { label: "Hochzeit oder mittelgroße Feier", set: "polar", alt: "lunar-duo", why: "Das Säulensystem ist für mittelgroße Feiern und Hochzeiten gedacht und baut schlank auf." },
+    { label: "Tanzparty mit DJ", set: "lunar-plus", alt: "linear5", why: "Zwei Tops und ein Sub bringen Bass auf die Tanzfläche. Bluetooth ist dabei, falls kein DJ-Pult da ist." },
+    { label: "Große Party mit viel Bass", set: "lunar-max", alt: "lunar-plus", why: "Zwei Subs und zwei Tops sind die größte Anlage, die ich vermiete." }
+  ];
+
+  var chips = document.getElementById("chips");
+  var pick = document.getElementById("pick");
+
+  chips.innerHTML = OCCASIONS.map(function (o, i) {
+    return '<li><button class="chip" type="button" data-i="' + i + '" aria-pressed="false">' + o.label + '</button></li>';
+  }).join("");
+
+  function showPick(i) {
+    var o = OCCASIONS[i], s = byId[o.set], a = byId[o.alt];
+    Array.prototype.forEach.call(chips.querySelectorAll(".chip"), function (c) {
+      c.setAttribute("aria-pressed", String(Number(c.getAttribute("data-i")) === i));
+    });
+    pick.innerHTML = '<div>' + makeSvg(s.stacks, s.label) + '</div>' +
+      '<div><div class="name">' + s.name + '</div><p class="why">' + o.why + '</p>' +
+      '<p class="price">' + s.price + ' € pro Tag, ' + s.parts + '</p>' +
+      '<p class="alt muted">Alternative: ' + a.name + ' für ' + a.price + ' € pro Tag.</p>' +
+      '<a class="btn" target="_blank" rel="noopener" href="' + waLink(setMsg(s)) + '">Dieses Set anfragen</a></div>';
+  }
+  chips.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (b) { showPick(Number(b.getAttribute("data-i"))); }
+  });
+  showPick(2);
+
+  /* ---------- Licht ---------- */
+  var LIGHT = [
+    { name: "Diskokugel", model: "ADJ Starburst", text: "Wirft Lichtpunkte durch den ganzen Raum.", icon: "ball" },
+    { name: "Ambientelicht mit Akku", model: "Fun Generation Pod LED", text: "Steht auf Tischen, Treppen oder im Garten, ohne Kabel.", icon: "pod" },
+    { name: "Partylicht", model: "Stairville Boxx FX 2", text: "Großes Partylicht für die Tanzfläche.", icon: "fx" },
+    { name: "Lichtröhren", model: "Eurolite Tube", text: "Stehen frei im Raum und schaffen Atmosphäre.", icon: "tube" }
+  ];
+  function lightIcon(k) {
+    var inner = "";
+    if (k === "ball") { inner = '<path d="M60 4 V26"/><circle class="body" cx="60" cy="52" r="26"/><path d="M34 52 H86 M60 26 V78 M42 34 C54 44 54 60 42 70 M78 34 C66 44 66 60 78 70"/>'; }
+    if (k === "pod") { inner = '<path d="M10 100 H110" class="ground"/><path class="body" d="M36 100 C36 70 84 70 84 100 Z"/><path d="M44 78 C52 70 68 70 76 78"/><circle class="dot" cx="60" cy="86" r="3.5"/>'; }
+    if (k === "fx") { inner = '<path d="M10 100 H110" class="ground"/><path d="M60 62 V100 M60 62 L46 100 M60 62 L74 100"/><rect class="body" x="28" y="30" width="64" height="32" rx="5"/><circle cx="44" cy="46" r="7"/><circle cx="60" cy="46" r="7"/><circle cx="76" cy="46" r="7"/>'; }
+    if (k === "tube") { inner = '<path d="M10 100 H110" class="ground"/><rect class="body" x="52" y="10" width="16" height="90" rx="8"/><path d="M60 22 V88"/>'; }
+    return '<svg class="plot" viewBox="0 0 120 108" role="img" aria-hidden="true">' + inner + '</svg>';
+  }
+  document.getElementById("licht-cols").innerHTML = LIGHT.map(function (l) {
+    return '<article>' + lightIcon(l.icon) + '<div><h3>' + l.name + '</h3><p class="model muted">' + l.model + '</p><p class="txt">' + l.text + '</p></div></article>';
+  }).join("");
+
+  /* ---------- Zubehör ---------- */
+  var ZUB = [
+    ["Beamer", "für Filme, Fotos und Präsentationen"],
+    ["Leinwand", "passend zum Beamer"],
+    ["Stromgenerator Anker 535", "Strom, wo keine Steckdose ist"],
+    ["Nebelmaschine", "für Lichteffekte"],
+    ["Eisnebelmaschine", "bodennaher Nebel, zum Beispiel für den Hochzeitstanz"],
+    ["Mikrofone", "Gesangsmikrofon und normales Mikrofon"]
+  ];
+  document.getElementById("zub-list").innerHTML = ZUB.map(function (z) {
+    return '<li><span class="n">' + z[0] + '</span><span class="muted">' + z[1] + '</span></li>';
+  }).join("") + '<li><span class="muted">Preise für Zubehör nenne ich mit der Anfrage.</span></li>';
+
+  /* ---------- WhatsApp-Links mit Vorlage ---------- */
+  ["wa-main", "bar-wa"].forEach(function (id) {
+    document.getElementById(id).href = waLink(GENERIC);
+  });
+
+  /* ---------- Feste Leiste am Handy ausblenden, wenn die Anfrage im Bild ist ---------- */
+  var bar = document.getElementById("bar");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      bar.classList.toggle("hide", entries[0].isIntersecting);
+    }, { threshold: 0.15 }).observe(document.getElementById("anfrage"));
+  }
+})();
+</script>
+</body>
+</html>
