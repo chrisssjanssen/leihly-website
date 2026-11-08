@@ -201,6 +201,93 @@ details > div p + p { margin-top: var(--s2); }
 .bar .btn { width: 100%; }
 .bar.hide { transform: translateY(110%); }
 @media (min-width: 760px) { .bar { display: none; } body { padding-bottom: 0; } }
+
+/* ===== Erweiterungen (Vorschau) ===== */
+/* Kopf bleibt oben, Menü zeigt den aktuellen Abschnitt */
+header.top { position: sticky; top: -56px; z-index: 30; background: var(--cream); }
+section[id] { scroll-margin-top: 52px; }
+nav { padding-left: calc(var(--gutter) - 12px); }
+nav a { border-radius: 999px; transition: background .2s, color .2s; }
+nav a:first-child { padding-left: 12px; }
+nav a[aria-current="location"] { background: var(--mint); color: var(--green); font-weight: 600; text-decoration: none; }
+@media (max-width: 380px) { nav { padding-left: calc(var(--gutter) - 8px); } nav a:first-child { padding-left: 8px; } }
+@media (min-width: 760px) { header.top { top: 0; } nav { padding-left: 0; } nav a:first-child { padding-left: 12px; } }
+
+/* Nach oben */
+.totop { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(84px + env(safe-area-inset-bottom)); z-index: 25; width: 48px; height: 48px; border-radius: 50%; background: var(--mint); color: var(--green); display: grid; place-items: center; box-shadow: 0 0 0 2px var(--green), 0 6px 18px rgba(25, 82, 65, .25); opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .2s, transform .2s, visibility .2s; }
+.totop.show { opacity: 1; visibility: visible; transform: none; }
+.totop svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+@media (min-width: 760px) { .totop { bottom: 24px; right: 24px; } }
+
+/* Mint mit Absicht */
+.chip[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--cream), 0 0 0 5px var(--mint); }
+.tile .per { color: var(--mint); }
+.pick .price { margin-top: var(--s2); font-weight: 500; }
+.pick .pill { display: inline-block; white-space: nowrap; background: var(--mint); color: var(--green); font-weight: 700; padding: 6px 14px; border-radius: 999px; margin-right: 6px; }
+.included li { position: relative; padding-left: 30px; }
+.included li::before { content: ""; position: absolute; left: 2px; top: 17px; width: 14px; height: 7px; border-left: 3px solid var(--mint); border-bottom: 3px solid var(--mint); transform: rotate(-45deg); }
+
+/* Farbrhythmus */
+.alt { background: var(--surface); }
+.alt .cols article { background: var(--cream); }
+
+/* Finder: Kacheln mit zwei Anlässen */
+#chips .chip { display: grid; gap: 2px; align-content: center; padding: 12px 20px; }
+#chips .chip .s { font-weight: 500; font-size: .9rem; color: var(--grey); }
+#chips .chip[aria-pressed="true"] .s { color: var(--on-green-muted); }
+@media (min-width: 700px) { #chips .chip { border-radius: 22px; } #chips { max-width: 900px; } }
+
+/* Finder: zweite Frage */
+.q { text-align: center; font-weight: 600; color: var(--green); margin: var(--s4) 0 var(--s1); }
+.chips.guests { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.chips.guests .chip { min-height: 48px; padding: 10px 14px; }
+@media (min-width: 700px) { .chips.guests { display: flex; } }
+
+/* Maßstab: alle Set-Zeichnungen gleich groß */
+.tile .plot { height: auto; width: calc(var(--w, 160) * var(--k) * 1px); max-width: 100%; }
+.tile { --k: .74; }
+@media (max-width: 360px) { .tile { --k: .62; } }
+.plot .honey { stroke-width: 1; stroke-opacity: .38; }
+.plot .scaled * { vector-effect: non-scaling-stroke; }
+.plot .person { fill: currentColor; fill-opacity: .16; stroke-width: 1.6; }
+
+/* Fragen */
+.faq { max-width: 760px; margin: 0 auto; }
+.faq details { border-top: 1px solid var(--line); }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; justify-content: space-between; gap: var(--s2); padding: 12px 0; min-height: 60px; font-size: 1.1rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; flex: none; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(var(--green), var(--green)) center / 12px 2px no-repeat, linear-gradient(var(--green), var(--green)) center / 2px 12px no-repeat, var(--mint); }
+.faq details[open] summary::after { background: linear-gradient(var(--green), var(--green)) center / 12px 2px no-repeat, var(--mint); }
+.faq details > div { padding-bottom: var(--s3); }
+
+/* Anfrage groß */
+.request { padding: clamp(88px, 22vw, 200px) 0; }
+.request h2 { font-size: clamp(3.6rem, 19vw, 10rem); letter-spacing: -0.045em; line-height: .95; }
+.request .sec-head { margin-bottom: var(--s5); }
+.request .lead { font-size: clamp(1.25rem, 4vw, 1.7rem); max-width: 24em; margin-top: var(--s3); }
+.facts { list-style: none; margin: 0 auto var(--s3); padding: 0; display: grid; gap: 4px; max-width: 420px; }
+.facts li { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.facts li::before { content: ""; flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--mint); }
+@media (min-width: 760px) { .facts { margin-left: 0; } }
+
+/* Bewegung: nur wenn erwünscht */
+.plot .sw, .plot .bw { opacity: 0; stroke-width: 1.6; }
+.plot .bw { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .plot .sw.r { animation: swaveR 1.6s ease-out infinite; }
+  .plot .sw.l { animation: swaveL 1.6s ease-out infinite; }
+  .plot .bw { animation: bwave 1.8s ease-out infinite; }
+  .plot .bw.b { animation-delay: .9s; }
+  .plot .pulse { animation: pulse 2.4s ease-in-out infinite; }
+  .plot .pulse.b { animation-delay: 1.2s; }
+  .plot .drow { animation: roll 3.2s linear infinite; }
+}
+@keyframes swaveR { 0% { opacity: 0; transform: translateX(-2px); } 25% { opacity: 1; } 100% { opacity: 0; transform: translateX(3px); } }
+@keyframes swaveL { 0% { opacity: 0; transform: translateX(2px); } 25% { opacity: 1; } 100% { opacity: 0; transform: translateX(-3px); } }
+@keyframes bwave { 0% { opacity: .9; transform: scale(.6); } 100% { opacity: 0; transform: scale(2.4); } }
+@keyframes pulse { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
+@keyframes roll { from { transform: translateX(0); } to { transform: translateX(-9px); } }
 </style>
 </head>
 <body>
@@ -213,6 +300,7 @@ details > div p + p { margin-top: var(--s2); }
       <a href="#licht">Licht</a>
       <a href="#zubehoer">Zubehör</a>
       <a href="#ablauf">Ablauf</a>
+      <a href="#fragen">Fragen</a>
       <a href="#anfrage">Anfrage</a>
     </nav>
   </div>
@@ -222,7 +310,7 @@ details > div p + p { margin-top: var(--s2); }
 <section class="hero">
   <div class="wrap">
     <h1><span>Sound.</span> <span>Licht.</span> <span>Bild.</span></h1>
-    <p class="lead">Eventtechnik zum Mieten in Köln. Boxen, Partylicht, Beamer und Strom für Hochzeit, Geburtstag und Firmenfeier. Kabel und Stative sind dabei.</p>
+    <p class="lead">Eventtechnik zum Mieten in Köln. Boxen, Partylicht, Beamer und Strom für Hochzeit, Geburtstag und Firmenfeier. Kostenlose Beratung.</p>
     <div class="cta-row">
       <a class="btn" href="#anfrage">Anfrage stellen</a>
       <a class="link" href="#sound">Sets und Preise ansehen</a>
@@ -234,9 +322,11 @@ details > div p + p { margin-top: var(--s2); }
   <div class="wrap">
     <div class="sec-head">
       <h2>Was feierst du?</h2>
-      <p class="lead muted">Tipp auf deinen Anlass. Du siehst, welches Set dazu passt.</p>
+      <p class="lead muted">Tipp auf deinen Anlass und die Gästezahl. Du siehst, welches Set dazu passt.</p>
     </div>
     <ul class="chips" id="chips"></ul>
+    <p class="q" id="q-gaeste">Wie viele Gäste?</p>
+    <ul class="chips guests" id="guests" aria-labelledby="q-gaeste"></ul>
     <div class="pick" id="pick" aria-live="polite"></div>
   </div>
 </section>
@@ -261,7 +351,7 @@ details > div p + p { margin-top: var(--s2); }
   </div>
 </section>
 
-<section class="tight" id="zubehoer">
+<section class="alt" id="zubehoer">
   <div class="wrap">
     <div class="sec-head">
       <h2>Zubehör</h2>
@@ -281,7 +371,7 @@ details > div p + p { margin-top: var(--s2); }
   </div>
 </section>
 
-<section class="tight" id="ablauf">
+<section id="ablauf">
   <div class="wrap">
     <div class="sec-head"><h2>So läuft es ab</h2></div>
     <ol class="steps">
@@ -294,6 +384,21 @@ details > div p + p { margin-top: var(--s2); }
       <div><dt>Mehrere Tage</dt><dd>Für mehrtägige Mieten gibt es Rabatt.</dd></div>
       <div><dt>Einzelteile</dt><dd>Tops, Subs und Säulen einzeln oder neu kombiniert. Preis auf Anfrage.</dd></div>
     </dl>
+  </div>
+</section>
+
+<section class="tight" id="fragen">
+  <div class="wrap">
+    <div class="sec-head"><h2>Häufige Fragen</h2></div>
+    <div class="faq">
+      <details name="faq"><summary>Was kostet ein Set?</summary><div><p>Alle Preise sind Tagespreise pro Set. Kabel und Stative gehören je nach Set dazu. Für mehrtägige Mieten gibt es Rabatt. Für Licht und Zubehör nenne ich dir den Preis mit der Anfrage.</p></div></details>
+      <details name="faq"><summary>Wie hole ich die Technik ab?</summary><div><p>Die Abholung in Köln läuft nach Absprache, mit kurzer Einweisung. Lieferung und Aufbau sind nach Absprache möglich.</p></div></details>
+      <details name="faq"><summary>Brauche ich eine Kaution?</summary><div><p>Ja. Bei der Abholung hinterlegst du eine Kaution und zeigst deinen Personalausweis.</p></div></details>
+      <details name="faq"><summary>Brauche ich Strom vor Ort?</summary><div><p>Die SOUNDBOKS und das Ambientelicht laufen mit Akku. Für alles andere brauchst du eine Steckdose, oder du mietest den Stromgenerator Anker 535 dazu.</p></div></details>
+      <details name="faq"><summary>Kann ich einzelne Teile mieten?</summary><div><p>Ja. Tops, Subs und Säulen gibt es einzeln oder neu kombiniert. Bei manchen Sets steht der Einzelpreis direkt dabei, sonst nenne ich dir den Preis auf Anfrage.</p></div></details>
+      <details name="faq"><summary>Wie schnell antwortest du?</summary><div><p>In unter 30 Minuten. Am schnellsten geht es per WhatsApp.</p></div></details>
+      <details name="faq"><summary>Welches Set passt zu mir?</summary><div><p>Nutze oben den Finder oder schick mir Ort, Anlass und Gästezahl. Ich sage dir ehrlich, wenn ein kleineres Set reicht.</p></div></details>
+    </div>
   </div>
 </section>
 
@@ -310,10 +415,11 @@ details > div p + p { margin-top: var(--s2); }
     <div class="inner">
       <div class="sec-head">
         <h2>Anfrage</h2>
-        <p class="lead muted">Antwort in unter 30 Minuten. Schreib mir kurz Datum, Ort und Anlass, am schnellsten geht es per WhatsApp.</p>
+        <p class="lead muted">Schreib mir kurz Datum, Ort und Anlass. Am schnellsten geht es per WhatsApp.</p>
       </div>
       <div class="contact">
         <div class="left">
+          <ul class="facts"><li>Antwort in unter 30 Minuten</li><li>Abholung in Köln, Lieferung möglich</li></ul>
           <div class="channels">
             <a class="btn" id="wa-main" href="https://wa.me/4915233952330" target="_blank" rel="noopener">Per WhatsApp schreiben</a>
             <a class="btn line" href="tel:+4915233952330">Anrufen</a>
@@ -366,6 +472,8 @@ details > div p + p { margin-top: var(--s2); }
   </div>
 </footer>
 
+<a class="totop" id="totop" href="#top" aria-label="Nach oben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
 <div class="bar" id="bar"><a class="btn" id="bar-wa" href="https://wa.me/4915233952330" target="_blank" rel="noopener">Per WhatsApp anfragen</a></div>
 
 <script>
@@ -374,11 +482,45 @@ details > div p + p { margin-top: var(--s2); }
 
   var WA = "https://wa.me/4915233952330";
   function waLink(msg) { return WA + "?text=" + encodeURIComponent(msg); }
-  function setMsg(s) { return "Hallo Christian, ich möchte bei leihly das Set " + s.name + " anfragen.\n\nDatum:\nOrt:"; }
+  function setMsg(s, extras, ctx) {
+    var l = ["Hallo Christian, ich möchte bei leihly das Set " + s.name + " anfragen.", ""];
+    if (ctx) { l.push("Anlass: " + ctx.anlass, "Gäste: " + ctx.gaeste); }
+    if (extras && extras.length) { l.push("Dazu: " + extras.join(", ")); }
+    l.push("Datum:", "Ort:");
+    return l.join("\n");
+  }
   var GENERIC = "Hallo Christian, ich möchte bei leihly anfragen.\n\nDatum:\nOrt:\nAnlass:";
 
   /* ---------- Bühnenplan-Symbole ---------- */
-  var SIZE = { top: [44, 56], topL: [54, 68], sub: [58, 58], subL: [68, 66], col: [22, 92], box: [42, 54], bass: [46, 60], col2: [22, 80] };
+  var SIZE = { top: [44, 56], topL: [54, 68], sub: [58, 58], subL: [68, 66], col: [22, 92], box: [42, 54], bass: [46, 60], col2: [22, 80], subW: [67, 58], topW: [51, 56], subF: [66, 37, 13], subLF: [78, 38, 13.5], subMF: [75, 49, 17.5] };
+
+  /* Wabengitter für die Frontblende der SOUNDBOKS */
+  var honeyN = 0, waveN = 0;
+  function honey(cx, by, w, h) {
+    var r = 3.3, dx = r * 1.7321, dy = r * 1.5, d = "", row = 0, y, x, k, a, id = "hc" + (honeyN++), bx = cx - w / 2;
+    for (y = by - r; y <= by + h + r; y += dy, row++) {
+      for (x = bx - dx + (row % 2 ? dx / 2 : 0); x <= bx + w + dx; x += dx) {
+        for (k = 0; k < 6; k++) {
+          a = Math.PI / 180 * (90 + 60 * k);
+          d += (k ? "L" : "M") + (x + r * Math.cos(a)).toFixed(1) + " " + (y + r * Math.sin(a)).toFixed(1);
+        }
+        d += "Z";
+      }
+    }
+    return '<clipPath id="' + id + '"><rect x="' + bx + '" y="' + by + '" width="' + w + '" height="' + h + '" rx="5"/></clipPath>' +
+      '<path class="honey" clip-path="url(#' + id + ')" d="' + d + '"/>';
+  }
+
+  /* Bewegung: Schallwellen aus Tops, Basswellen aus Subs und Boxen */
+  function arcs(cx, cy, w) {
+    var rx = cx + w / 2, lx = cx - w / 2;
+    return '<path class="sw r" d="M' + (rx + 4) + ' ' + (cy - 4) + ' q3 4 0 8 M' + (rx + 8) + ' ' + (cy - 8) + ' q4.5 8 0 16"/>' +
+      '<path class="sw l" d="M' + (lx - 4) + ' ' + (cy - 4) + ' q-3 4 0 8 M' + (lx - 8) + ' ' + (cy - 8) + ' q-4.5 8 0 16"/>';
+  }
+  function rings(cx, cy, r0, bx, by, w, h) {
+    waveN++;
+    return '<clipPath id="bw' + waveN + '"><rect x="' + bx + '" y="' + by + '" width="' + w + '" height="' + h + '" rx="5"/></clipPath><g clip-path="url(#bw' + waveN + ')"><circle class="bw" cx="' + cx + '" cy="' + cy + '" r="' + r0 + '"/><circle class="bw b" cx="' + cx + '" cy="' + cy + '" r="' + r0 + '"/></g>';
+  }
 
   function stackSvg(items, x, ground) {
     var maxW = 0, i, out = "", y = ground, cx;
@@ -395,25 +537,39 @@ details > div p + p { margin-top: var(--s2); }
       } else {
         var w = SIZE[it][0], h = SIZE[it][1], bx = cx - w / 2, by = y - h;
         out += '<rect class="body" x="' + bx + '" y="' + by + '" width="' + w + '" height="' + h + '" rx="5"/>';
-        if (it === "top") {
+        var kind = it.charAt(it.length - 1) === "W" ? it.slice(0, -1) : it;
+        if (kind === "top") {
           out += '<circle cx="' + cx + '" cy="' + (y - h * 0.36) + '" r="14"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.82) + '" r="3.5"/>';
-        } else if (it === "sub") {
+        } else if (kind === "subF" || kind === "subLF" || kind === "subMF") {
+          out += '<circle cx="' + cx + '" cy="' + (y - h / 2) + '" r="' + SIZE[it][2] + '"/><circle class="dot" cx="' + cx + '" cy="' + (y - h / 2) + '" r="3.2"/>';
+        } else if (kind === "sub") {
           out += '<circle cx="' + cx + '" cy="' + (y - h / 2) + '" r="21"/><circle class="dot" cx="' + cx + '" cy="' + (y - h / 2) + '" r="4"/>';
-        } else if (it === "topL") {
+        } else if (kind === "topL") {
           out += '<circle cx="' + cx + '" cy="' + (y - h * 0.36) + '" r="18"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.84) + '" r="4"/>';
-        } else if (it === "subL") {
+        } else if (kind === "subL") {
           out += '<circle cx="' + cx + '" cy="' + (y - h / 2) + '" r="25"/><circle class="dot" cx="' + cx + '" cy="' + (y - h / 2) + '" r="4.5"/>';
-        } else if (it === "bass") {
+        } else if (kind === "bass") {
           out += '<circle cx="' + cx + '" cy="' + (y - h * 0.55) + '" r="14"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.55) + '" r="3.5"/><path d="M' + (cx - 11) + ' ' + (y - 9) + ' h22"/>';
-        } else if (it === "col2") {
+          waveN++;
+          out += '<clipPath id="bw' + waveN + '"><rect x="' + bx + '" y="' + by + '" width="' + w + '" height="' + h + '" rx="5"/></clipPath><g clip-path="url(#bw' + waveN + ')"><circle class="bw" cx="' + cx + '" cy="' + (y - h * 0.55) + '" r="10"/><circle class="bw b" cx="' + cx + '" cy="' + (y - h * 0.55) + '" r="10"/></g>';
+        } else if (kind === "col2") {
           for (var j = 0; j < 4; j++) { out += '<circle cx="' + cx + '" cy="' + (by + 13 + j * 14) + '" r="5"/>'; }
           out += '<circle class="dot" cx="' + cx + '" cy="' + (y - 9) + '" r="3.5"/>';
-        } else if (it === "col") {
+          for (var m = 0; m < 4; m++) {
+            var wy = by + 13 + m * 14, dl = ' style="animation-delay:' + (m * 0.22).toFixed(2) + 's"';
+            out += '<path class="sw r"' + dl + ' d="M' + (cx + 8.5) + ' ' + (wy - 2.5) + ' q2.5 2.5 0 5 M' + (cx + 12) + ' ' + (wy - 4.5) + ' q3.5 4.5 0 9"/>' +
+              '<path class="sw l"' + dl + ' d="M' + (cx - 8.5) + ' ' + (wy - 2.5) + ' q-2.5 2.5 0 5 M' + (cx - 12) + ' ' + (wy - 4.5) + ' q-3.5 4.5 0 9"/>';
+          }
+        } else if (kind === "col") {
           for (var k = 0; k < 4; k++) { out += '<circle cx="' + cx + '" cy="' + (by + 14 + k * 15) + '" r="5"/>'; }
           out += '<circle class="dot" cx="' + cx + '" cy="' + (y - 14) + '" r="3.5"/>';
-        } else if (it === "box") {
-          out += '<path d="M' + (cx - 8) + ' ' + by + ' v-7 h16 v7"/><circle cx="' + cx + '" cy="' + (y - h * 0.45) + '" r="13"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.45) + '" r="3"/>';
+        } else if (kind === "box") {
+          out += '<path d="M' + (cx - 8) + ' ' + by + ' v-7 h16 v7"/><circle cx="' + cx + '" cy="' + (y - h * 0.45) + '" r="13"/><circle class="dot" cx="' + cx + '" cy="' + (y - h * 0.45) + '" r="3"/>'
+          out += honey(cx, by, w, h);
         }
+        if (kind === "top" || kind === "topL") { out += arcs(cx, y - h * 0.4, w); }
+        else if (kind === "sub" || kind === "subL" || kind === "subF" || kind === "subLF" || kind === "subMF") { out += rings(cx, y - h / 2, Math.round(Math.min(w, h) * 0.3 * 10) / 10 + (h < 50 ? 2 : 0), bx, by, w, h); }
+        else if (kind === "box") { out += rings(cx, y - h * 0.45, 8, bx, by, w, h); }
         y -= h;
       }
     }
@@ -423,12 +579,28 @@ details > div p + p { margin-top: var(--s2); }
   function badgeSvg(cx, cy) {
     return '<g transform="rotate(-8 ' + cx + ' ' + cy + ')"><circle cx="' + cx + '" cy="' + cy + '" r="19" fill="#A7E3C6" stroke="#195241" stroke-width="2"/><rect x="' + (cx - 8) + '" y="' + (cy - 13) + '" width="14" height="7" rx="1.5" fill="none" stroke="#195241" stroke-width="1.6"/><path d="M' + (cx + 6.5) + ' ' + (cy - 11.5) + ' v4" fill="none" stroke="#195241" stroke-width="1.6"/><path d="M' + (cx - 6) + ' ' + (cy - 11.5) + ' h8 v4 h-8z" fill="#195241" stroke="none"/><text x="' + cx + '" y="' + (cy + 9) + '" text-anchor="middle" font-size="9.5" font-weight="800" fill="#195241" stroke="none" style="letter-spacing:0">AKKU</text></g>';
   }
+  /* Person als Größenvergleich: ca. 1,75 m, 45 Einheiten pro Meter */
+  function personSvg(cx, ground) {
+    var top = ground - 79;
+    return '<g class="person"><circle cx="' + cx + '" cy="' + (top + 7) + '" r="7"/>' +
+      '<path d="M' + (cx - 10) + ' ' + ground + ' V' + (top + 36) + ' Q' + (cx - 10) + ' ' + (top + 17) + ' ' + cx + ' ' + (top + 17) + ' Q' + (cx + 10) + ' ' + (top + 17) + ' ' + (cx + 10) + ' ' + (top + 36) + ' V' + ground + ' Z"/>' +
+      '<path d="M' + cx + ' ' + (ground - 30) + ' V' + ground + '"/></g>';
+  }
   function plot(stacks, badge) {
     var gap = 26, x = 14, parts = "", ground = 150;
+    parts += personSvg(x + 10, ground);
+    x += 20 + gap;
     stacks.forEach(function (s) {
       var r = stackSvg(s, x, ground);
-      parts += r.svg;
-      x += r.w + gap;
+      /* Polar: verkleinert, Bass ca. auf Oberschenkelhöhe, Säulen ca. 25 % über der Person */
+      var f = s.indexOf("bass") >= 0 ? 0.7 : (s.indexOf("pole") >= 0 ? 0.75 : 1);
+      if (f !== 1) {
+        var c0 = x + r.w / 2, c1 = x + r.w * f / 2;
+        parts += '<g class="scaled" transform="translate(' + c1 + ' ' + ground + ') scale(' + f + ') translate(' + (-c0) + ' ' + (-ground) + ')">' + r.svg + '</g>';
+      } else {
+        parts += r.svg;
+      }
+      x += r.w * f + gap;
     });
     var total = x - gap + 14;
     if (badge) { parts += badgeSvg(total / 2, 28); }
@@ -445,7 +617,7 @@ details > div p + p { margin-top: var(--s2); }
   function makeSvg(stacks, label, badge) {
     var p = plot(stacks, badge);
     var h = p.vb.split(" ");
-    return '<svg class="plot" viewBox="' + p.vb + '" width="' + h[2] + '" height="' + h[3] + '" role="img" aria-label="' + label + '">' + p.inner + '</svg>';
+    return '<svg class="plot" viewBox="' + p.vb + '" width="' + h[2] + '" height="' + h[3] + '" style="--w:' + h[2] + '" role="img" aria-label="' + label + ' (daneben eine Person als Größenvergleich)">' + p.inner + '</svg>';
   }
 
   /* ---------- Sets ---------- */
@@ -454,9 +626,9 @@ details > div p + p { margin-top: var(--s2); }
     { id: "linear110", name: "HK Audio Linear 110 XA", parts: "2 × Topteil", desc: "Für Reden, Hintergrundmusik und kleine Events.", price: 40, single: "Einzeln 25 €", stacks: [["stand", "top"], ["stand", "top"]], label: "Zwei Tops auf Stativen" },
     { id: "polar", name: "HK Audio Polar", parts: "2 × Säulensystem", desc: "Für mittelgroße Feiern und Hochzeiten. Schlank aufgebaut.", price: 70, single: "Einzeln 40 €", stacks: [["bass", "col2"], ["bass", "col2"]], label: "Zwei Säulensysteme auf Bass" },
     { id: "lunar-duo", name: "HK Audio Lunar Duo", parts: "2 × Lunar 112 Top", desc: "Full Range mit Bluetooth, für mittlere bis große Events.", price: 70, single: "Einzeln 40 €", stacks: [["stand", "topL"], ["stand", "topL"]], label: "Zwei Tops auf Stativen" },
-    { id: "linear5", name: "HK Audio Linear 5 Power-Set", parts: "2 × 110 XA Top + 1 × 115 Sub", desc: "Das Linear-Set mit Sub für Musik mit Bass.", price: 130, single: "", stacks: [["stand", "top"], ["sub"], ["stand", "top"]], label: "Zwei Tops und ein Sub" },
-    { id: "lunar-plus", name: "HK Audio Lunar Plus", parts: "2 × Lunar 112 Top + 1 × 15\" Sub", desc: "Für größere Partys und DJ-Sets, mit Bass und Bluetooth.", price: 170, single: "", stacks: [["stand", "topL"], ["subL"], ["stand", "topL"]], label: "Zwei Tops und ein Sub" },
-    { id: "lunar-max", name: "HK Audio Lunar Max", parts: "2 × Lunar 112 Top + 2 × 15\" Sub", desc: "Die größte Anlage in meinem Verleih, mit zwei Subs für viel Bass.", price: 250, single: "", stacks: [["sub", "pole", "top"], ["sub", "pole", "top"]], label: "Zwei Tops auf zwei Subs" }
+    { id: "linear5", name: "HK Audio Linear 5 Power-Set", parts: "2 × 110 XA Top + 1 × 115 Sub", desc: "Das Linear-Set mit Sub für Musik mit Bass.", price: 130, single: "", stacks: [["stand", "top"], ["subF"], ["stand", "top"]], label: "Zwei Tops und ein Sub" },
+    { id: "lunar-plus", name: "HK Audio Lunar Plus", parts: "2 × Lunar 112 Top + 1 × 15\" Sub", desc: "Für größere Partys und DJ-Sets, mit Bass und Bluetooth.", price: 170, single: "", stacks: [["stand", "topL"], ["subLF"], ["stand", "topL"]], label: "Zwei Tops und ein Sub" },
+    { id: "lunar-max", name: "HK Audio Lunar Max", parts: "2 × Lunar 112 Top + 2 × 15\" Sub", desc: "Die größte Anlage in meinem Verleih, mit zwei Subs für viel Bass.", price: 250, single: "", stacks: [["subMF", "pole", "topW"], ["subMF", "pole", "topW"]], label: "Zwei Tops auf zwei Subs" }
   ];
   var byId = {};
   SETS.forEach(function (s) { byId[s.id] = s; });
@@ -470,39 +642,62 @@ details > div p + p { margin-top: var(--s2); }
       '</article>';
   }).join("");
 
-
   /* ---------- Anlass-Finder ---------- */
+  var FIT = {
+    "soundboks": "Die Akku-Box läuft ohne Strom und spielt per Bluetooth. Mehr Aufbau brauchst du nicht.",
+    "linear110": "Zwei Tops sind schnell aufgebaut und klingen klar für Reden und Musik.",
+    "polar": "Das Säulensystem baut schlank auf und ist für mittelgroße Feiern und Hochzeiten gedacht.",
+    "lunar-duo": "Full Range mit Bluetooth, gut für mittlere Events.",
+    "linear5": "Mit dem Sub bekommst du Bass zu den Tops dazu.",
+    "lunar-plus": "Zwei Tops und ein Sub bringen Bass auf die Tanzfläche. Bluetooth ist dabei, falls kein DJ-Pult da ist.",
+    "lunar-max": "Zwei Subs und zwei Tops sind die größte Anlage, die ich vermiete."
+  };
+  var GUESTS = ["bis 30", "30 bis 80", "80 bis 150", "über 150"];
+  /* je Anlass und Gästezahl: [Empfehlung, Alternative] */
   var OCCASIONS = [
-    { label: "Reden und Hintergrundmusik", set: "linear110", alt: "lunar-duo", why: "Für Ansprachen oder Musik im Hintergrund reichen zwei Tops. Sie sind schnell aufgebaut." },
-    { label: "Gartenparty oder kleine Feier", set: "soundboks", alt: "linear110", why: "Die Akku-Box läuft ohne Strom und spielt per Bluetooth. Mehr Aufbau brauchst du nicht." },
-    { label: "Hochzeit oder mittelgroße Feier", set: "polar", alt: "lunar-duo", why: "Das Säulensystem ist für mittelgroße Feiern und Hochzeiten gedacht und baut schlank auf." },
-    { label: "Tanzparty mit DJ", set: "lunar-plus", alt: "linear5", why: "Zwei Tops und ein Sub bringen Bass auf die Tanzfläche. Bluetooth ist dabei, falls kein DJ-Pult da ist." },
-    { label: "Große Party mit viel Bass", set: "lunar-max", alt: "lunar-plus", why: "Zwei Subs und zwei Tops sind die größte Anlage, die ich vermiete." }
+    { label: "Geburtstag oder Hausparty", sub: "Wohnung, Garten, WG-Party", pick: [["soundboks", "linear110"], ["soundboks", "linear110"], ["lunar-duo", "polar"], ["polar", "lunar-plus"]] },
+    { label: "Hochzeit oder Jubiläum", sub: "Saal, Restaurant, Goldene Hochzeit", pick: [["linear110", "polar"], ["polar", "lunar-duo"], ["lunar-plus", "polar"], ["lunar-plus", "lunar-max"]] },
+    { label: "Veedelsfest oder Vereinsfest", sub: "Straßenfest, Sommerfest im Verein", pick: [["lunar-duo", "polar"], ["lunar-duo", "polar"], ["lunar-plus", "lunar-duo"], ["lunar-max", "lunar-plus"]] },
+    { label: "Firmenfeier oder Weihnachtsfeier", sub: "Sommerfest, Jubiläum mit Reden", pick: [["linear110", "lunar-duo"], ["linear110", "lunar-duo"], ["polar", "lunar-duo"], ["lunar-plus", "polar"]] },
+    { label: "Große Party oder Club Feeling", sub: "Silvester, Mottoparty, Clubabend", pick: [["lunar-duo", "linear5"], ["lunar-plus", "linear5"], ["lunar-plus", "lunar-max"], ["lunar-max", "lunar-plus"]] }
   ];
 
   var chips = document.getElementById("chips");
+  var guests = document.getElementById("guests");
   var pick = document.getElementById("pick");
+  var occ = 1, gst = 1;
 
   chips.innerHTML = OCCASIONS.map(function (o, i) {
-    return '<li><button class="chip" type="button" data-i="' + i + '" aria-pressed="false">' + o.label + '</button></li>';
+    return '<li><button class="chip" type="button" data-i="' + i + '" aria-pressed="false"><span class="t">' + o.label + '</span><span class="s">' + o.sub + '</span></button></li>';
+  }).join("");
+  guests.innerHTML = GUESTS.map(function (g, i) {
+    return '<li><button class="chip" type="button" data-i="' + i + '" aria-pressed="false">' + g.charAt(0).toUpperCase() + g.slice(1) + '</button></li>';
   }).join("");
 
-  function showPick(i) {
-    var o = OCCASIONS[i], s = byId[o.set], a = byId[o.alt];
+  function showPick() {
+    var o = OCCASIONS[occ], r = o.pick[gst], s = byId[r[0]], a = byId[r[1]];
     Array.prototype.forEach.call(chips.querySelectorAll(".chip"), function (c) {
-      c.setAttribute("aria-pressed", String(Number(c.getAttribute("data-i")) === i));
+      c.setAttribute("aria-pressed", String(Number(c.getAttribute("data-i")) === occ));
     });
+    Array.prototype.forEach.call(guests.querySelectorAll(".chip"), function (c) {
+      c.setAttribute("aria-pressed", String(Number(c.getAttribute("data-i")) === gst));
+    });
+    var why = FIT[s.id] + (gst === 3 ? " Bei so vielen Gästen schreib mir kurz, dann schauen wir, ob noch mehr Technik sinnvoll ist." : "");
     pick.innerHTML = '<div>' + makeSvg(s.stacks, s.label, s.badge) + '</div>' +
-      '<div><div class="name">' + s.name + '</div><p class="why">' + o.why + '</p>' +
-      '<p class="price">' + s.price + ' € pro Tag, ' + s.parts + '</p>' +
+      '<div><div class="name">' + s.name + '</div><p class="why">' + why + '</p>' +
+      '<p class="price"><span class="pill">' + s.price + ' € pro Tag</span>' + s.parts + '</p>' +
       '<p class="alt muted">Alternative: ' + a.name + ' für ' + a.price + ' € pro Tag.</p>' +
-      '<a class="btn" target="_blank" rel="noopener" href="' + waLink(setMsg(s)) + '">Dieses Set anfragen</a></div>';
+      '<a class="btn" target="_blank" rel="noopener" href="' + waLink(setMsg(s, null, { anlass: o.label, gaeste: GUESTS[gst] })) + '">Dieses Set anfragen</a></div>';
   }
   chips.addEventListener("click", function (e) {
     var b = e.target.closest(".chip");
-    if (b) { showPick(Number(b.getAttribute("data-i"))); }
+    if (b) { occ = Number(b.getAttribute("data-i")); showPick(); }
   });
-  showPick(2);
+  guests.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (b) { gst = Number(b.getAttribute("data-i")); showPick(); }
+  });
+  showPick();
 
   /* ---------- Licht ---------- */
   var LIGHT = [
@@ -513,9 +708,36 @@ details > div p + p { margin-top: var(--s2); }
   ];
   function lightIcon(k) {
     var inner = "";
-    if (k === "ball") { inner = '<path d="M10 100 H110" class="ground"/><path d="M60 70 V92 M60 92 L46 100 M60 92 L74 100"/><circle class="body" cx="60" cy="44" r="25"/><path d="M35 44 H85 M60 19 V69 M43 27 C54 37 54 51 43 61 M77 27 C66 37 66 51 77 61"/><path d="M60 8 V14 M92 18 L88 22 M28 18 L32 22 M100 44 H94 M20 44 H26 M94 68 L90 64 M26 68 L30 64"/><path d="M92 100 H100 M100 100 C108 100 108 88 108 84" stroke-width="1.6"/><rect x="104" y="72" width="8" height="12" rx="1.5" stroke-width="1.6"/><path d="M106.5 72 V68 M109.5 72 V68" stroke-width="1.6"/>'; }
-    if (k === "pod") { inner = '<path d="M10 100 H110" class="ground"/><path class="body" d="M36 100 C36 70 84 70 84 100 Z"/><circle class="dot" cx="60" cy="86" r="3.5"/><path d="M60 62 V50 M44 66 L36 56 M76 66 L84 56 M32 78 L20 72 M88 78 L100 72"/>'; }
-    if (k === "fx") { inner = '<path d="M10 104 H110" class="ground"/><path d="M60 46 V104 M60 46 L44 104 M60 46 L76 104"/><rect class="body" x="4" y="10" width="112" height="36" rx="6"/><circle cx="20" cy="28" r="6"/><circle cx="40" cy="28" r="6"/><circle class="dot" cx="40" cy="28" r="2"/><rect x="54" y="22" width="12" height="12" rx="2"/><path d="M80 21.5 L86.5 34 H73.5 Z"/><path d="M100 21 L107.5 28 L100 35 L92.5 28 Z"/>'; }
+    if (k === "ball") {
+      /* Spiegelkugel mit Linsenpunkten auf Standfuß, Punkte laufen langsam durch */
+      var rows = "", ry, rx, rr;
+      for (rr = 0; rr < 5; rr++) {
+        ry = 28 + rr * 9;
+        rows += '<g class="drow">';
+        for (rx = 14 + (rr % 2 ? 4.5 : 0); rx <= 112; rx += 9) { rows += '<circle cx="' + rx + '" cy="' + ry + '" r="2.5"/>'; }
+        rows += '</g>';
+      }
+      inner = '<path d="M10 100 H110" class="ground"/><rect class="body" x="55" y="70" width="10" height="8"/><rect class="body" x="48" y="76" width="24" height="7" rx="3"/><path class="body" d="M26 100 L31 88 Q32 83 38 83 H82 Q88 83 89 88 L94 100 Z"/><rect x="46" y="88" width="28" height="7" rx="2" stroke-width="1.5"/><circle class="dot" cx="53" cy="91.5" r="1.1"/><circle class="dot" cx="60" cy="91.5" r="1.1"/><circle class="dot" cx="67" cy="91.5" r="1.1"/><circle class="body" cx="60" cy="46" r="26"/>' +
+        '<clipPath id="ballclip"><circle cx="60" cy="46" r="23.5"/></clipPath><g class="dots" clip-path="url(#ballclip)" stroke-width="1.5">' + rows + '</g>' +
+        '<path class="pulse" d="M60 8 V14 M100 46 H94 M20 46 H26"/><path class="pulse b" d="M92 20 L88 24 M28 20 L32 24 M94 72 L90 68 M26 72 L30 68"/>' +
+        '<path d="M92 94 H100 C108 94 108 88 108 84" stroke-width="1.6"/><rect x="104" y="72" width="8" height="12" rx="1.5" stroke-width="1.6"/><path d="M106.5 72 V68 M109.5 72 V68" stroke-width="1.6"/>';
+    }
+    if (k === "pod") { inner = '<path d="M10 100 H110" class="ground"/><path class="body" d="M36 100 C36 70 84 70 84 100 Z"/><circle class="dot" cx="60" cy="86" r="3.5"/><path class="pulse" d="M60 62 V50 M32 78 L20 72 M88 78 L100 72"/><path class="pulse b" d="M44 66 L36 56 M76 66 L84 56"/>'; }
+    if (k === "fx") {
+      /* Lichtbalken auf Stativ: 2 Derbys außen, 2 LED-Spots innen */
+      var cxs = [18, 46, 74, 102], fx = "", n;
+      for (n = 0; n < 4; n++) {
+        var c = cxs[n];
+        fx += '<path d="M' + c + ' 14 V20"/>';
+        if (n === 0 || n === 3) {
+          fx += '<path class="body" d="M' + (c - 11) + ' 22 H' + (c + 11) + ' L' + (c + 8) + ' 42 H' + (c - 8) + ' Z"/><path d="M' + (c - 4) + ' 26 V38 M' + c + ' 26 V38 M' + (c + 4) + ' 26 V38" stroke-width="1.6"/>';
+        } else {
+          fx += '<rect class="body" x="' + (c - 11) + '" y="20" width="22" height="22" rx="4"/>' +
+            '<circle class="dot" cx="' + c + '" cy="31" r="1.9"/><circle class="dot" cx="' + (c - 5.5) + '" cy="25.5" r="1.9"/><circle class="dot" cx="' + (c + 5.5) + '" cy="25.5" r="1.9"/><circle class="dot" cx="' + (c - 5.5) + '" cy="36.5" r="1.9"/><circle class="dot" cx="' + (c + 5.5) + '" cy="36.5" r="1.9"/>';
+        }
+      }
+      inner = '<path d="M10 104 H110" class="ground"/><path d="M60 14 V104 M60 64 L42 104 M60 64 L78 104"/><rect class="body" x="4" y="8" width="112" height="6" rx="2"/>' + fx;
+    }
     if (k === "tube") { inner = '<path d="M10 100 H110" class="ground"/><rect class="body" x="52" y="10" width="16" height="90" rx="8"/><path d="M60 22 V88"/>'; }
     return '<svg class="plot" viewBox="0 0 120 108" role="img" aria-hidden="true">' + inner + '</svg>';
   }
@@ -550,6 +772,34 @@ details > div p + p { margin-top: var(--s2); }
   ["wa-main", "bar-wa"].forEach(function (id) {
     document.getElementById(id).href = waLink(GENERIC);
   });
+
+  /* ---------- Menü: aktueller Abschnitt, nach oben ---------- */
+  var nav = document.querySelector("nav");
+  var links = Array.prototype.slice.call(nav.querySelectorAll("a"));
+  var secs = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
+  var totop = document.getElementById("totop");
+  var curLink = -2, ticking = false;
+  function spy() {
+    ticking = false;
+    var cur = -1;
+    secs.forEach(function (sec, i) { if (sec && sec.getBoundingClientRect().top <= 140) { cur = i; } });
+    totop.classList.toggle("show", window.scrollY > 700);
+    if (cur === curLink) { return; }
+    curLink = cur;
+    links.forEach(function (a, i) {
+      if (i === cur) { a.setAttribute("aria-current", "location"); } else { a.removeAttribute("aria-current"); }
+    });
+    if (cur >= 0 && nav.scrollWidth > nav.clientWidth) {
+      var a = links[cur];
+      if (a.offsetLeft < nav.scrollLeft || a.offsetLeft + a.offsetWidth > nav.scrollLeft + nav.clientWidth) {
+        nav.scrollLeft = Math.max(0, a.offsetLeft - 24);
+      }
+    }
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
+  window.addEventListener("resize", spy);
+  totop.addEventListener("click", function (e) { e.preventDefault(); window.scrollTo({ top: 0 }); });
+  spy();
 
   /* ---------- Feste Leiste am Handy ausblenden, wenn die Anfrage im Bild ist ---------- */
   var bar = document.getElementById("bar");
