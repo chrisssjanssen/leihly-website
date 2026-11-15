@@ -289,6 +289,28 @@ nav a[aria-current="location"] { background: var(--mint); color: var(--green); f
 @keyframes pulse { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
 @keyframes roll { from { transform: translateX(0); } to { transform: translateX(-9px); } }
 </style>
+<script>
+/* Eigene Aufrufe nicht zählen: leihly.com/#nicht-zaehlen einmal je Gerät öffnen, rückgängig mit #zaehlen */
+(function () {
+  try {
+    var h = location.hash, msg = "";
+    if (h === "#nicht-zaehlen") { localStorage.setItem("umami.disabled", "1"); msg = "Eigene Aufrufe auf diesem Gerät werden nicht gezählt."; }
+    if (h === "#zaehlen") { localStorage.removeItem("umami.disabled"); msg = "Aufrufe auf diesem Gerät werden wieder gezählt."; }
+    if (msg) {
+      history.replaceState(null, "", location.pathname + location.search);
+      document.addEventListener("DOMContentLoaded", function () {
+        var t = document.createElement("div");
+        t.setAttribute("role", "status");
+        t.textContent = msg;
+        t.style.cssText = "position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:99;background:#195241;color:#FFFCF2;padding:12px 18px;border-radius:999px;font:600 15px system-ui,sans-serif;max-width:90vw;text-align:center";
+        document.body.appendChild(t);
+        setTimeout(function () { t.remove(); }, 5000);
+      });
+    }
+  } catch (e) { /* ignorieren */ }
+})();
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="d6df54b3-e477-4c27-b32e-2a53d167da3b" data-domains="leihly.com,www.leihly.com" data-do-not-track="true"></script>
 </head>
 <body>
 
@@ -464,7 +486,8 @@ nav a[aria-current="location"] { background: var(--mint); color: var(--green); f
       <summary>Datenschutz</summary>
       <div>
         <p>Verantwortlich ist Christian Janßen, Anschrift im Impressum, E-Mail jns.pay@web.de.</p>
-        <p>Beim Aufruf dieser Seite verarbeitet der Hoster technisch notwendige Daten, zum Beispiel IP-Adresse und Zeitpunkt des Abrufs, in Server-Logfiles. Die Seite setzt keine Cookies und nutzt keine Analyse- oder Werbedienste. Sie verwendet die Schrift deines Geräts und lädt keine Schriften von Dritten nach.</p>
+        <p>Beim Aufruf dieser Seite verarbeitet der Hoster technisch notwendige Daten, zum Beispiel IP-Adresse und Zeitpunkt des Abrufs, in Server-Logfiles. Die Seite setzt keine Cookies und nutzt keine Werbedienste. Sie verwendet die Schrift deines Geräts und lädt keine Schriften von Dritten nach.</p>
+        <p>Zur Reichweitenmessung nutze ich Umami Cloud (Umami Software, Inc.) mit Servern in Deutschland (EU-Region). Dabei werden keine Cookies gesetzt und keine Besucher dauerhaft wiedererkannt. Die IP-Adresse wird nur kurz für eine grobe Ortsbestimmung verarbeitet und nicht gespeichert. Erfasst werden anonym die aufgerufenen Abschnitte, die Verweildauer, Gerätetyp, Browser, Herkunftsseite, Land, Region und Stadt sowie Klicks auf WhatsApp, Telefon, E-Mail und die Auswahl im Set-Finder. Rechtsgrundlage ist mein berechtigtes Interesse an einer Auswertung der Nutzung (Art. 6 Abs. 1 lit. f DSGVO). Wenn in deinem Browser „Do Not Track“ aktiviert ist, wird nichts erfasst.</p>
         <p>Wenn du mich über WhatsApp, Telefon oder E-Mail kontaktierst, nutze ich deine Angaben nur, um deine Anfrage zu beantworten und die Miete abzuwickeln. Tippst du auf einen WhatsApp-Button oder scannst den QR-Code, öffnet sich WhatsApp. Dafür gelten die Datenschutzbestimmungen von WhatsApp. Diese Seite sendet vorher keine Daten dorthin.</p>
         <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Widerspruch. Du kannst dich außerdem bei der zuständigen Datenschutzaufsicht beschweren, in Nordrhein-Westfalen ist das die Landesbeauftragte für Datenschutz und Informationsfreiheit.</p>
       </div>
@@ -482,6 +505,17 @@ nav a[aria-current="location"] { background: var(--mint); color: var(--green); f
 
   var WA = "https://wa.me/4915233952330";
   function waLink(msg) { return WA + "?text=" + encodeURIComponent(msg); }
+
+  /* Reichweitenmessung (Umami): zählt nur Klicks auf Kontaktwege und Finder-Auswahl, keine Cookies */
+  function track(name, data) { try { if (window.umami && window.umami.track) { window.umami.track(name, data); } } catch (e) { /* ignorieren */ } }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("a[href]");
+    if (!a) { return; }
+    var h = a.getAttribute("href"), sec = a.closest("section, footer, .bar"), area = sec ? (sec.id || sec.className.split(" ")[0]) : "";
+    if (h.indexOf("wa.me") > -1) { track("whatsapp", { bereich: area }); }
+    else if (h.indexOf("tel:") === 0) { track("anruf", { bereich: area }); }
+    else if (h.indexOf("mailto:") === 0) { track("email", { bereich: area }); }
+  });
   function setMsg(s, extras, ctx) {
     var l = ["Hallo Christian, ich möchte bei leihly das Set " + s.name + " anfragen.", ""];
     if (ctx) { l.push("Anlass: " + ctx.anlass, "Gäste: " + ctx.gaeste); }
@@ -691,11 +725,11 @@ nav a[aria-current="location"] { background: var(--mint); color: var(--green); f
   }
   chips.addEventListener("click", function (e) {
     var b = e.target.closest(".chip");
-    if (b) { occ = Number(b.getAttribute("data-i")); showPick(); }
+    if (b) { occ = Number(b.getAttribute("data-i")); track("finder-anlass", { anlass: OCCASIONS[occ].label }); showPick(); }
   });
   guests.addEventListener("click", function (e) {
     var b = e.target.closest(".chip");
-    if (b) { gst = Number(b.getAttribute("data-i")); showPick(); }
+    if (b) { gst = Number(b.getAttribute("data-i")); track("finder-gaeste", { gaeste: GUESTS[gst] }); showPick(); }
   });
   showPick();
 
